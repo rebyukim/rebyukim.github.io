@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Rebecca Kim</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root { --cream: #F5F0E8; --ink: #1A1612; --warm-mid: #8C7B6B; --accent: #C4622D; --rule: #D9D0C4; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--cream); color: var(--ink); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; line-height: 1.6; cursor: none; }
+  .cursor { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s ease; }
+  .cursor-ring { width: 32px; height: 32px; border: 1px solid var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.18s ease; opacity: 0.5; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 28px 48px; }
+  .nav-name { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a.active { color: var(--accent); }
+
+  .page-header {
+    padding: 160px 48px 100px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .page-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+  .page-title { font-size: clamp(44px, 6vw, 80px); font-weight: 300; line-height: 1.0; letter-spacing: -0.02em; max-width: 700px; opacity: 0; animation: fadeUp 0.9s ease 0.35s forwards; }
+  .page-title em { font-style: italic; color: var(--accent); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 280px 2fr;
+    gap: 60px;
+    padding: 100px 48px;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .about-sidebar { position: sticky; top: 100px; }
+  .sidebar-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+  .sidebar-nav { display: flex; flex-direction: column; gap: 12px; }
+  .sidebar-nav a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-mid); text-decoration: none; transition: color 0.2s; }
+  .sidebar-nav a:hover { color: var(--accent); }
+
+  .about-photo { position: sticky; top: 100px; }
+  .about-photo-frame {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  .about-photo-frame img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 3/4;
+    border: 2px solid var(--accent);
+  }
+  .about-photo-frame::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: -10px;
+    bottom: -10px;
+    border: 1px solid var(--accent);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .about-body { }
+  .about-body h2 { font-size: clamp(28px, 3.5vw, 44px); font-weight: 300; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 32px; }
+  .about-body h2 em { font-style: italic; color: var(--accent); }
+  .about-body p { font-size: 17px; font-weight: 300; color: var(--warm-mid); line-height: 1.9; margin-bottom: 24px; max-width: 600px; }
+  .about-body p:last-of-type { margin-bottom: 0; }
+
+  .skills-section { padding: 80px 48px; border-bottom: 1px solid var(--rule); }
+  .skills-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 48px; }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .skill-group { background: #EDE8DF; padding: 36px 32px; }
+  .skill-group-title { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+  .skill-list { display: flex; flex-direction: column; gap: 10px; }
+  .skill-item { font-size: 15px; font-weight: 300; color: var(--warm-mid); }
+
+  .skills-tags-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; padding: 32px 48px; border-bottom: 1px solid var(--rule); }
+  .skill-tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-mid); border: 1px solid var(--rule); padding: 6px 14px; transition: border-color 0.2s, color 0.2s; }
+  .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+  footer { padding: 32px 48px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-mid); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--rule); }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .page-header { padding: 120px 24px 60px; }
+    .about-grid { grid-template-columns: 1fr; padding: 60px 24px; }
+    .about-sidebar { position: static; }
+    .about-photo { position: static; max-width: 260px; }
+    .about-photo-frame::after { display: none; }
+    .skills-section { padding: 60px 24px; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .skills-tags-row { padding: 24px; }
+    footer { padding: 24px; flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-name">Rebecca Kim</a>
+  <ul class="nav-links">
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="experience.html">Experience</a></li>
+    <li><a href="work.html">Work</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="page-eyebrow">The person behind the work</p>
+  <h1 class="page-title">Where <em>process</em> meets creative ambition.</h1>
+</div>
+
+<div class="about-grid">
+  <div class="about-sidebar reveal">
+    <div class="sidebar-label">On this page</div>
+    <nav class="sidebar-nav">
+      <a href="#story">Background</a>
+      <a href="#skills">Skills</a>
+    </nav>
+  </div>
+  <div class="about-photo reveal">
+    <div class="about-photo-frame">
+      <img src="IMG_0633.jpeg" alt="Rebecca Kim">
+    </div>
+  </div>
+  <div class="about-body reveal" id="story">
+    <h2>An unconventional path — on <em>purpose.</em></h2>
+    <p>I spent six years running a federally-funded research program at SMU before stepping into marketing and creative strategy. It taught me how to manage complex ecosystems, speak the language of diverse stakeholders, and—most importantly—how to stay calm when the stakes are high and the data is dense. That experience shaped how I approach experience design: understanding people first, then building systems that support them.</p>
+    <p>My work focuses on improving how organizations operate behind the scenes — mapping journeys, aligning stakeholders, and designing the workflows, templates, and content pipelines that allow teams to deliver better experiences consistently.</p>
+    <p>Across projects, I tend to gravitate toward the same core question: Why isn't this system working as well as it should — and how do we fix it without losing the human element?</p>
+  </div>
+</div>
+
+<div class="skills-section" id="skills">
+  <div class="skills-label reveal">Skills & Tools</div>
+  <div class="skills-grid">
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Strategy</div>
+      <div class="skill-list">
+        <span class="skill-item">Content Strategy</span>
+        <span class="skill-item">Campaign Execution</span>
+        <span class="skill-item">Go-to-Market</span>
+        <span class="skill-item">A/B Testing</span>
+        <span class="skill-item">Journey Mapping</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Operations</div>
+      <div class="skill-list">
+        <span class="skill-item">Agile / Scrum</span>
+        <span class="skill-item">CRM / Lifecycle</span>
+        <span class="skill-item">Stakeholder Mgmt</span>
+        <span class="skill-item">Program Leadership</span>
+        <span class="skill-item">Cross-functional Collaboration</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Tools</div>
+      <div class="skill-list">
+        <span class="skill-item">Salesforce</span>
+        <span class="skill-item">Figma</span>
+        <span class="skill-item">Canva</span>
+        <span class="skill-item">Google Analytics</span>
+        <span class="skill-item">Tableau</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="skills-tags-row reveal">
+  <span class="skill-tag">Content Strategy</span>
+  <span class="skill-tag">Campaign Execution</span>
+  <span class="skill-tag">CRM / Lifecycle</span>
+  <span class="skill-tag">Salesforce</span>
+  <span class="skill-tag">Figma</span>
+  <span class="skill-tag">A/B Testing</span>
+  <span class="skill-tag">Agile / Scrum</span>
+  <span class="skill-tag">Data Visualization</span>
+  <span class="skill-tag">Go-to-Market</span>
+  <span class="skill-tag">Canva</span>
+  <span class="skill-tag">Google Analytics</span>
+  <span class="skill-tag">Tableau</span>
+  <span class="skill-tag">Attentive</span>
+  <span class="skill-tag">WCAG / Accessibility</span>
+</div>
+
+<footer>
+  <span class="footer-copy">© 2026 Rebecca Kim</span>
+  
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+    setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 60);
+  });
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), 80); observer.unobserve(entry.target); } });
+  }, { threshold: 0.05 });
+  revealEls.forEach(el => observer.observe(el));
+  setTimeout(() => { revealEls.forEach(el => el.classList.add('visible')); }, 1000);
+</script>
+</body>
+</html>
