@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First-Year Ownership & Welcome Series — Rebecca Kim</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root { --cream: #F5F0E8; --ink: #1A1612; --warm-mid: #8C7B6B; --accent: #C4622D; --rule: #D9D0C4; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--ink); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; line-height: 1.6; cursor: none; }
+  .cursor { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s ease; }
+  .cursor-ring { width: 32px; height: 32px; border: 1px solid var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.18s ease; opacity: 0.5; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 28px 48px; }
+  .nav-name { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); text-decoration: none; }
+  .nav-back { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--accent); }
+
+  .case-hero { min-height: 65vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 140px 48px 80px; border-bottom: 1px solid var(--rule); position: relative; overflow: hidden; }
+  .case-hero-bg { position: absolute; inset: 0; background: var(--ink); z-index: 0; }
+  .case-hero-content { position: relative; z-index: 1; max-width: 840px; }
+  .case-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+  .case-title { font-size: clamp(40px, 6vw, 80px); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em; color: var(--cream); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.9s ease 0.35s forwards; }
+  .case-title em { font-style: italic; color: var(--accent); }
+  .case-hero-meta { display: flex; gap: 48px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.9s ease 0.5s forwards; }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+  .meta-value { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.7); }
+
+  .tags-bar { border-bottom: 1px solid var(--rule); padding: 28px 48px; display: flex; align-items: center; gap: 32px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s ease 0.65s forwards; }
+  .tags-bar-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--warm-mid); white-space: nowrap; }
+  .tags-bar-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 5px 12px; }
+
+  .stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--rule); }
+  .stat-block { padding: 44px 40px; border-right: 1px solid var(--rule); opacity: 0; animation: fadeUp 0.8s ease forwards; }
+  .stat-block:nth-child(1) { animation-delay: 0.7s; }
+  .stat-block:nth-child(2) { animation-delay: 0.82s; }
+  .stat-block:nth-child(3) { animation-delay: 0.94s; border-right: none; }
+  .stat-num { font-size: clamp(28px, 3.5vw, 48px); font-weight: 300; letter-spacing: -0.02em; color: var(--accent); line-height: 1; margin-bottom: 8px; }
+  .stat-desc { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-mid); line-height: 1.5; }
+
+  .case-section { display: grid; grid-template-columns: 220px 1fr; gap: 60px; padding: 80px 48px; border-bottom: 1px solid var(--rule); }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); padding-top: 6px; }
+  .section-label-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding-top: 4px; }
+  .section-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .section-icon svg { width: 20px; height: 20px; }
+  .icon-challenge { background: rgba(196,98,45,0.12); }
+  .icon-approach { background: rgba(100,130,200,0.12); }
+  .icon-action { background: rgba(200,160,40,0.12); }
+  .icon-results { background: rgba(60,160,100,0.12); }
+  .icon-learning { background: rgba(140,90,200,0.12); }
+  .icon-whatidid { background: rgba(60,160,100,0.12); }
+  .section-content h2 { font-size: clamp(26px, 3vw, 38px); font-weight: 300; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 24px; }
+  .section-content h2 em { font-style: italic; color: var(--accent); }
+  .section-content p { font-size: 17px; font-weight: 300; color: var(--warm-mid); line-height: 1.8; margin-bottom: 20px; max-width: 640px; }
+  .section-content p:last-child { margin-bottom: 0; }
+
+  /* Pillars */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 36px; }
+  .pillar { background: #EDE8DF; padding: 32px 28px; }
+  .pillar-title { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .pillar-body { font-size: 15px; font-weight: 300; color: var(--warm-mid); line-height: 1.7; }
+
+  /* Timeline */
+  .timeline { display: flex; flex-direction: column; gap: 0; margin-top: 36px; max-width: 640px; }
+  .timeline-item { display: grid; grid-template-columns: 140px 1fr; gap: 24px; padding: 20px 0; border-top: 1px solid var(--rule); }
+  .timeline-item:last-child { border-bottom: 1px solid var(--rule); }
+  .timeline-time { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); padding-top: 3px; }
+  .timeline-content { font-size: 15px; font-weight: 300; color: var(--warm-mid); line-height: 1.6; }
+  .timeline-content em { font-style: italic; color: var(--accent); }
+  .timeline-title { font-size: 16px; font-weight: 400; color: var(--ink); margin-bottom: 4px; }
+
+  .action-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+  .action-list li { font-size: 16px; font-weight: 300; color: var(--warm-mid); line-height: 1.7; padding-left: 24px; position: relative; max-width: 640px; }
+  .action-list li::before { content: '—'; position: absolute; left: 0; color: var(--accent); font-family: 'DM Mono', monospace; font-size: 12px; }
+
+  .sub-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 12px; padding-left: 20px; border-left: 1px solid var(--rule); }
+  .sub-list li { font-size: 14px; font-weight: 300; color: var(--warm-mid); line-height: 1.7; padding-left: 16px; position: relative; max-width: 580px; }
+  .sub-list li::before { content: '·'; position: absolute; left: 0; color: var(--accent); font-size: 16px; line-height: 1.4; }
+
+  .key-learning { padding: 80px 48px; border-bottom: 1px solid var(--rule); background: #EDE8DF; }
+  .key-learning-inner { max-width: 720px; }
+  .kl-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
+  .kl-text { font-size: clamp(18px, 2.2vw, 26px); font-weight: 300; line-height: 1.6; letter-spacing: -0.01em; color: var(--ink); }
+  .kl-text em { font-style: italic; color: var(--accent); }
+
+  .case-nav { display: flex; justify-content: space-between; align-items: center; padding: 48px; }
+  .case-nav-link { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; display: flex; align-items: center; gap: 10px; }
+  .case-nav-link:hover { color: var(--accent); border-color: var(--accent); }
+  .case-nav-link.next { flex-direction: row-reverse; }
+
+  footer { padding: 32px 48px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-mid); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--rule); }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .case-hero { padding: 120px 24px 60px; }
+    .case-hero-meta { gap: 24px; }
+    .tags-bar { padding: 20px 24px; gap: 16px; }
+    .stats-bar { grid-template-columns: 1fr; }
+    .stat-block { border-right: none; padding: 32px 24px; }
+    .case-section { grid-template-columns: 1fr; gap: 20px; padding: 60px 24px; }
+    .pillars { grid-template-columns: 1fr; }
+    .timeline-item { grid-template-columns: 1fr; gap: 6px; }
+    .key-learning { padding: 60px 24px; }
+    .nda-inline { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 16px; font-weight: 300; color: var(--warm-mid); line-height: 1.7; margin-top: 40px; max-width: 580px; font-style: italic; }
+  .nda-inline a { color: #C4622D; text-decoration: none; border-bottom: 1px solid #C4622D; padding-bottom: 1px; }
+  .nda-inline a:hover { opacity: 0.7; }
+
+  .case-nav { padding: 40px 24px; flex-direction: column; gap: 24px; align-items: flex-start; }
+    footer { padding: 24px; flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-name">Rebecca Kim</a>
+  <a href="work.html" class="nav-back">← All Work</a>
+</nav>
+
+<section class="case-hero">
+  <div class="case-hero-bg"></div>
+  <div class="case-hero-content">
+    <p class="case-eyebrow">02 — CX Strategy · LG Electronics North America</p>
+    <h1 class="case-title">First-Year Ownership &<br><em>Welcome Series</em></h1>
+    <div class="case-hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Company</span>
+        <span class="meta-value">LG Electronics North America</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Role</span>
+        <span class="meta-value">Program Lead, CX Innovation</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Year</span>
+        <span class="meta-value">2023–2024</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Scope</span>
+        <span class="meta-value">Lifecycle Design · Support Ops · Persona Development</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="tags-bar">
+  <span class="tags-bar-label">Tags</span>
+  <div class="tags-bar-tags">
+    <span class="tag">CX Strategy</span>
+    <span class="tag">Lifecycle Journey Design</span>
+    <span class="tag">Customer Onboarding</span>
+    <span class="tag">Content Systems</span>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-block">
+    <div class="stat-num">6</div>
+    <div class="stat-desc">Lifecycle milestones across the first 18 months</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-num">↓</div>
+    <div class="stat-desc">Measurable decline in reactive support volume</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-num">↑</div>
+    <div class="stat-desc">Substantial growth in lifecycle content engagement</div>
+  </div>
+</div>
+
+<div class="case-body">
+
+  <div class="case-section reveal">
+    <div class="section-label-wrap">
+      <div class="section-icon icon-challenge"><svg viewBox="0 0 24 24" fill="none" stroke="#C4622D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+      <span class="section-label">Challenge</span>
+    </div>
+    <div class="section-content">
+      <h2>Support was reactive. Customers were <em>left to figure it out.</em></h2>
+      <p>Post-purchase friction remained a significant barrier to long-term satisfaction. Customers struggled to maximize product utility after the initial setup phase, leading to high-volume reactive support inquiries. An internal audit revealed that while support content existed, it was siloed and lacked a strategic delivery framework.</p>
+      <p>The objective was to transform support from a reactive cost center into a proactive education engine — one that guides customers through the entire first year of ownership.</p>
+    </div>
+  </div>
+
+  <div class="case-section reveal">
+    <div class="section-label-wrap">
+      <div class="section-icon icon-approach"><svg viewBox="0 0 24 24" fill="none" stroke="#4A7CC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg></div>
+      <span class="section-label">Approach</span>
+    </div>
+    <div class="section-content">
+      <h2>Turning support data into <em>proactive customer guidance.</em></h2>
+      <p>I spearheaded the design of the First-Year Ownership Lifecycle — a program predicated on translating data-driven insights into anticipatory customer communication. The strategy was built on three core pillars:</p>
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-title">Simplify My Life</div>
+          <div class="pillar-body">Proactively addressing friction points before they necessitate a support call — turning problems into non-events.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-title">Keep Showing Me Value</div>
+          <div class="pillar-body">Ensuring customers unlock advanced features well beyond the initial setup — making the product feel new again at 3, 9, and 13 months.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-title">Show Me I Matter</div>
+          <div class="pillar-body">Delivering experiences tailored to specific owner profiles and behavioral signals — not generic broadcast messaging.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-section reveal">
+    <div class="section-label-wrap">
+      <div class="section-icon icon-action"><svg viewBox="0 0 24 24" fill="none" stroke="#C8A028" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      <span class="section-label">Action</span>
+    </div>
+    <div class="section-content">
+      <h2>Bridging Customer Service and Marketing through <em>lifecycle design.</em></h2>
+      <p>As Program Lead, I orchestrated the synthesis of support data and lifecycle design across CS and Marketing teams.</p>
+      <ul class="action-list">
+        <li>
+          <strong style="font-weight:400; color: var(--ink);">Persona-Driven Insight</strong> — Analyzed support call volumes and issue patterns to map Owner Personas, identifying usage scenarios that dictated the "when" and "what" of proactive communications.
+        </li>
+        <li>
+          <strong style="font-weight:400; color: var(--ink);">Lifecycle Welcome Series</strong> — Architected an engagement series spanning six critical milestones across the first year and a half of ownership:
+        </li>
+      </ul>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <span class="timeline-time">Day 0</span>
+          <div>
+            <div class="timeline-title">Setup & Integration</div>
+            <div class="timeline-content">Immediate post-purchase installation guidance to remove friction from the first interaction. <em>Includes set-up guide.</em></div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-time">Week 2</span>
+          <div>
+            <div class="timeline-title">Early Adoption</div>
+            <div class="timeline-content">Onboarding support targeting the most common drop-off moments in the first two weeks. <em>Includes exploring key features.</em></div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-time">Month 1</span>
+          <div>
+            <div class="timeline-title">Feature Discovery</div>
+            <div class="timeline-content">Value-add touchpoint introducing capabilities customers haven't yet explored. <em>Includes product review and sweepstakes in coordination with business units.</em></div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-time">Month 3</span>
+          <div>
+            <div class="timeline-title">Deep Feature Unlock</div>
+            <div class="timeline-content">Second feature discovery wave — targeting advanced use cases and integrations. <em>Includes proactive care tips.</em></div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-time">Month 9</span>
+          <div>
+            <div class="timeline-title">Long-Term Engagement</div>
+            <div class="timeline-content">Value reinforcement at the point where product enthusiasm often wanes.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-time">Months 13 & 18</span>
+          <div>
+            <div class="timeline-title">Loyalty & Retention</div>
+            <div class="timeline-content">Brand loyalty touchpoints designed to reinforce product value and prime for future purchase consideration. <em>Includes troubleshooting guide.</em></div>
+          </div>
+        </div>
+      </div>
+
+      <ul class="action-list" style="margin-top: 36px;">
+        <li>
+          <strong style="font-weight:400; color: var(--ink);">CX Operations & Governance</strong> — Built a scalable content ecosystem to ensure long-term viability:
+          <ul class="sub-list">
+            <li><strong style="font-weight:400; color: var(--ink);">Content Matrix</strong> — Developed a standardized framework to align creative messaging with specific lifecycle milestones.</li>
+            <li><strong style="font-weight:400; color: var(--ink);">Intake Workflow</strong> — Established a continuous feedback loop between CS teams and content creators, allowing real-time support trends to dictate future content updates.</li>
+            <li><strong style="font-weight:400; color: var(--ink);">Evergreen Systems</strong> — Designed reusable templates and brand guidelines to maintain consistency across diverse product categories.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="case-section reveal">
+    <div class="section-label-wrap">
+      <div class="section-icon icon-results"><svg viewBox="0 0 24 24" fill="none" stroke="#3CA064" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="section-label">Results</span>
+    </div>
+    <div class="section-content">
+      <h2>From answering questions to <em>empowering owners.</em></h2>
+      <p>The initiative successfully matured the support infrastructure — shifting the focus from reactive firefighting to proactive ownership education.</p>
+      <ul class="action-list">
+        <li><strong style="font-weight:400; color: var(--ink);">Reduced Reactive Volume</strong> — Achieved a measurable decline in reliance on reactive customer support channels as proactive content intercepted common friction points.</li>
+        <li><strong style="font-weight:400; color: var(--ink);">Increased Content Utility</strong> — Substantial growth in engagement with lifecycle guidance and support resource portals, indicating customers were finding and using content independently.</li>
+        <li><strong style="font-weight:400; color: var(--ink);">Operational Efficiency</strong> — Established a scalable workflow bridging support insights with proactive content delivery — reducing per-contact costs and enabling rapid iteration.</li>
+        <li><strong style="font-weight:400; color: var(--ink);">Sustainable Governance</strong> — Implemented a permanent intake process ensuring the content ecosystem remains responsive to emerging support trends and customer feedback.</li>
+      </ul>
+      <p class="nda-inline">Due to NDA restrictions, some data points and internal systems have been omitted or generalized. <a href="https://calendly.com/rebyukim" target="_blank">Schedule e-Coffee chat.</a></p>
+    </div>
+  </div>
+
+</div>
+
+<div class="key-learning reveal">
+  <div class="key-learning-inner">
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:24px;">
+    <div class="section-icon icon-learning"><svg viewBox="0 0 24 24" fill="none" stroke="#8C5AC8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+    <div class="kl-label" style="margin-bottom:0;">Key Learning</div>
+  </div>
+    <p class="kl-text">A successful First-Year Ownership Strategy is not just about sending emails — it is about <em>building a feedback loop.</em> By systematically translating support interaction data into lifecycle messaging, organizations can preemptively solve user problems, decrease cost-per-contact, and increase the long-term value the customer derives from the product.</p>
+  </div>
+</div>
+
+<div class="case-nav">
+  <a href="case-study-01-lg.html" class="case-nav-link">← Previous project</a>
+  <a href="case-study-03-campaign.html" class="case-nav-link next">Next project →</a>
+</div>
+
+<footer>
+  <span class="footer-copy">© 2026 Rebecca Kim</span>
+  
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+    setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 60);
+  });
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), 80); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+  setTimeout(() => { revealEls.forEach(el => el.classList.add('visible')); }, 1000);
+
+  // Nav color swap on scroll past hero
+  const nav = document.querySelector('nav');
+  const hero = document.querySelector('.case-hero');
+  const navName = document.querySelector('.nav-name');
+  const navBack = document.querySelector('.nav-back');
+
+  function updateNav() {
+    if (!hero) return;
+    const heroBottom = hero.getBoundingClientRect().bottom;
+    if (heroBottom <= 0) {
+      navName.style.color = 'var(--warm-mid)';
+      navBack.style.color = 'var(--warm-mid)';
+    } else {
+      navName.style.color = 'var(--accent)';
+      navBack.style.color = 'var(--accent)';
+    }
+  }
+  window.addEventListener('scroll', updateNav);
+  updateNav();
+</script>
+</body>
+</html>
