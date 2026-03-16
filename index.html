@@ -259,4 +259,13 @@
     }
   }
 
-  const fish = Array.f
+  const fish = Array.from({length: 7}, () => new Fish());
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    fish.forEach(f => { f.update(); f.draw(); });
+    requestAnimationFrame(animate);
+  }
+  animate();
+</script>
+</body>
+</html>
