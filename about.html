@@ -72,6 +72,15 @@
   .about-body p { font-size: 17px; font-weight: 300; color: var(--warm-mid); line-height: 1.9; margin-bottom: 24px; max-width: 600px; }
   .about-body p:last-of-type { margin-bottom: 0; }
 
+  .pub-section { padding: 80px 48px; border-bottom: 1px solid var(--rule); }
+  .pub-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 48px; }
+  .pub-item { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 36px 0; border-bottom: 1px solid var(--rule); }
+  .pub-item:last-child { border-bottom: none; }
+  .pub-citation { font-size: 15px; font-weight: 300; color: var(--ink); line-height: 1.8; }
+  .pub-citation em { font-style: italic; color: var(--warm-mid); }
+  .pub-focus { font-size: 14px; font-weight: 300; color: var(--warm-mid); line-height: 1.8; padding-left: 24px; border-left: 2px solid var(--accent); }
+  .pub-focus strong { font-weight: 400; color: var(--accent); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; display: block; margin-bottom: 10px; }
+
   .skills-section { padding: 80px 48px; border-bottom: 1px solid var(--rule); }
   .skills-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 48px; }
   .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
@@ -134,6 +143,7 @@
     <div class="sidebar-label">On this page</div>
     <nav class="sidebar-nav">
       <a href="#story">Background</a>
+      <a href="#publications">Publications</a>
       <a href="#skills">Skills</a>
     </nav>
   </div>
@@ -144,10 +154,36 @@
   </div>
   <div class="about-body reveal" id="story">
     <h2>An unconventional path — on <em>purpose.</em></h2>
-    <p>I spent six years running a federally-funded clinical research program at SMU before stepping into marketing and creative strategy. It taught me how to manage complex ecosystems, speak the language of diverse stakeholders, and—most importantly—how to stay calm when the stakes are high and the data is dense. That experience shaped how I approach experience design: understanding people first, then building systems that support them.</p>
-    <p>My work focuses on improving how organizations operate behind the scenes — mapping journeys, aligning stakeholders, and designing the workflows, templates, and content pipelines that allow teams to deliver better experiences consistently.</p>
-    <p>Across projects, I tend to gravitate toward the same core question:</p>
+    <p>Interdisciplinary curiosity has always been my driving force. I spent six years running a federally funded clinical research program at SMU, investigating how biobehavioral drivers influence subconscious choices. My background in behavioral research includes two peer-reviewed publications, which solidified my ability to translate dense data into actionable, human-centric strategies. That experience taught me how to navigate high-stakes data, manage complex stakeholder ecosystems, and find the non-linear correlations that others miss.</p>
+    <p>Eventually, I moved from the lab to the digital world to apply that same rigor to Experience Operations.</p>
+    <p>Today, I specialize in the "behind-the-scenes" architecture of CX. I map journeys and design the workflows, content pipelines, and templates that allow teams to deliver seamless experiences at scale. Across projects, I tend to gravitate toward the same core question:</p>
     <p style="font-style: italic; font-size: 20px; color: var(--ink); border-left: 2px solid var(--accent); padding-left: 20px; margin-top: 4px; line-height: 1.6;">Why isn't this system working as well as it should — and how do we fix it without losing the human element?</p>
+  </div>
+</div>
+
+<div class="pub-section reveal" id="publications">
+  <div class="pub-label">Research & Publications</div>
+
+  <div class="pub-item">
+    <div class="pub-citation">
+      Kim, R., et al. (2023). Exploratory study of threat sensitivity as a moderator of positive affect treatment and negative affect treatment for depression and anxiety. <em>Journal of Experimental Psychopathology.</em>
+      <a href="https://journals.sagepub.com/doi/10.1177/20438087231161188" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 2px;">View Publication →</a>
+    </div>
+    <div class="pub-focus">
+      <strong>Application</strong>
+      Analyzing how individuals respond to stress and friction — expertise I now apply to identifying and mitigating pain points in the customer journey.
+    </div>
+  </div>
+
+  <div class="pub-item">
+    <div class="pub-citation">
+      Kim, R., et al. (2022). Social support, exhaled nitric oxide, and upper respiratory symptoms in health and asthma. <em>Biological Psychology.</em>
+      <a href="https://linkinghub.elsevier.com/retrieve/pii/S0301051122001053" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 2px;">View Publication →</a>
+    </div>
+    <div class="pub-focus">
+      <strong>Application</strong>
+      Investigating how support systems impact physical and psychological outcomes — the foundation for my work in Service Design and Support Operations.
+    </div>
   </div>
 </div>
 
