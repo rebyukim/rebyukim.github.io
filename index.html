@@ -84,6 +84,70 @@
   .page-nav-link:hover .page-nav-arrow { transform: rotate(0deg); color: var(--accent); }
   .page-nav-link:hover .page-nav-label, .page-nav-link:hover .page-nav-title { color: var(--accent); }
 
+  /* Feedback wall + form */
+  .feedback-section { padding: 100px 48px; border-top: 1px solid var(--rule); }
+  .feedback-header { max-width: 640px; margin-bottom: 56px; }
+  .feedback-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+  .feedback-title { font-size: clamp(28px, 3.5vw, 44px); font-weight: 300; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 16px; }
+  .feedback-title em { font-style: italic; color: var(--accent); }
+  .feedback-sub { font-size: 16px; font-weight: 300; color: var(--warm-mid); line-height: 1.7; }
+
+  .feedback-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: start; }
+
+  .feedback-wall { display: flex; flex-direction: column; gap: 2px; background: var(--rule); }
+  .feedback-card { background: var(--cream); padding: 28px 30px; }
+  .feedback-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
+  .feedback-name { font-size: 18px; font-weight: 400; color: var(--ink); }
+  .feedback-role { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--warm-mid); margin-top: 4px; }
+  .feedback-ratings { display: flex; flex-direction: column; gap: 3px; flex-shrink: 0; }
+  .feedback-rating-row { display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--warm-mid); }
+  .feedback-stars { color: var(--rule); font-size: 12px; letter-spacing: 1px; }
+  .feedback-stars .filled { color: var(--accent); }
+  .feedback-quote { font-size: 16px; font-weight: 300; color: var(--warm-mid); line-height: 1.75; }
+  .feedback-empty { background: var(--cream); border: 1px dashed var(--rule); padding: 48px 30px; text-align: center; }
+  .feedback-empty-title { font-size: 20px; font-weight: 300; color: var(--ink); margin-bottom: 8px; }
+  .feedback-empty-sub { font-size: 14px; color: var(--warm-mid); font-weight: 300; }
+
+  .feedback-form { background: #EDE8DF; padding: 40px; }
+  .feedback-form-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; }
+  .feedback-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .feedback-field { display: flex; flex-direction: column; gap: 6px; }
+  .feedback-field label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-mid); }
+  .feedback-field input[type="text"], .feedback-field input[type="email"], .feedback-field textarea {
+    font-family: 'Cormorant Garamond', Georgia, serif; font-size: 16px; font-weight: 300; color: var(--ink);
+    background: var(--cream); border: 1px solid var(--rule); padding: 11px 13px; outline: none;
+    transition: border-color 0.2s; width: 100%; cursor: text;
+  }
+  .feedback-field input:focus, .feedback-field textarea:focus { border-color: var(--accent); }
+  .feedback-field textarea { resize: vertical; min-height: 90px; font-size: 15px; line-height: 1.6; }
+  .feedback-ratings-block { margin: 24px 0 28px; display: flex; flex-direction: column; gap: 16px; }
+  .feedback-rating-field { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .feedback-rating-field > label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); }
+  .star-rating { display: flex; flex-direction: row-reverse; gap: 3px; }
+  .star-rating input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .star-rating label { font-size: 24px; line-height: 1; color: var(--rule); cursor: none; transition: color 0.15s; }
+  .star-rating input:checked ~ label,
+  .star-rating label:hover,
+  .star-rating label:hover ~ label { color: var(--accent); }
+  .feedback-submit {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream);
+    background: var(--ink); border: none; padding: 15px 32px; cursor: none; transition: background 0.2s; width: 100%;
+  }
+  .feedback-submit:hover { background: var(--accent); }
+  .feedback-status { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; margin-top: 14px; min-height: 14px; }
+  .feedback-status.ok { color: #4A7C4E; }
+  .feedback-status.err { color: var(--accent); }
+
+  @media (max-width: 900px) {
+    .feedback-grid { grid-template-columns: 1fr; gap: 48px; }
+  }
+  @media (max-width: 768px) {
+    .feedback-section { padding: 60px 24px; }
+    .feedback-form { padding: 28px; }
+    .feedback-form-row { grid-template-columns: 1fr; gap: 0; }
+    .feedback-card-head { flex-direction: column; }
+  }
+
   footer { padding: 32px 48px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
   .footer-copy { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-mid); }
 
@@ -215,6 +279,90 @@
   </div>
 </section>
 
+<section id="feedback" class="feedback-section">
+  <div class="feedback-header">
+    <div class="feedback-label">From people I've worked with</div>
+    <h2 class="feedback-title">Working <em>feedback wall.</em></h2>
+    <p class="feedback-sub">A running record of feedback from colleagues, clients, and collaborators — rated across three professional proficiencies. Submissions are reviewed before they're added.</p>
+  </div>
+
+  <div class="feedback-grid">
+    <div id="feedbackWall" class="feedback-wall"></div>
+
+    <form id="feedbackForm" class="feedback-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div class="feedback-form-title">Leave feedback</div>
+
+      <div class="feedback-form-row">
+        <div class="feedback-field">
+          <label for="fbFirst">First name</label>
+          <input type="text" id="fbFirst" name="firstName" required>
+        </div>
+        <div class="feedback-field">
+          <label for="fbLast">Last name</label>
+          <input type="text" id="fbLast" name="lastName" required>
+        </div>
+      </div>
+
+      <div class="feedback-form-row">
+        <div class="feedback-field">
+          <label for="fbCompany">Company</label>
+          <input type="text" id="fbCompany" name="company" required>
+        </div>
+        <div class="feedback-field">
+          <label for="fbTitle">Position title</label>
+          <input type="text" id="fbTitle" name="title" required>
+        </div>
+      </div>
+
+      <div class="feedback-field" style="margin-bottom: 16px;">
+        <label for="fbEmail">Email</label>
+        <input type="email" id="fbEmail" name="email" required>
+      </div>
+
+      <div class="feedback-field">
+        <label for="fbComment">Comment</label>
+        <textarea id="fbComment" name="comment" required></textarea>
+      </div>
+
+      <div class="feedback-ratings-block">
+        <div class="feedback-rating-field">
+          <label>Client &amp; Stakeholder Relations</label>
+          <div class="star-rating">
+            <input type="radio" id="rel5" name="rating_relations" value="5" required><label for="rel5">★</label>
+            <input type="radio" id="rel4" name="rating_relations" value="4"><label for="rel4">★</label>
+            <input type="radio" id="rel3" name="rating_relations" value="3"><label for="rel3">★</label>
+            <input type="radio" id="rel2" name="rating_relations" value="2"><label for="rel2">★</label>
+            <input type="radio" id="rel1" name="rating_relations" value="1"><label for="rel1">★</label>
+          </div>
+        </div>
+        <div class="feedback-rating-field">
+          <label>Strategic Execution</label>
+          <div class="star-rating">
+            <input type="radio" id="exe5" name="rating_execution" value="5" required><label for="exe5">★</label>
+            <input type="radio" id="exe4" name="rating_execution" value="4"><label for="exe4">★</label>
+            <input type="radio" id="exe3" name="rating_execution" value="3"><label for="exe3">★</label>
+            <input type="radio" id="exe2" name="rating_execution" value="2"><label for="exe2">★</label>
+            <input type="radio" id="exe1" name="rating_execution" value="1"><label for="exe1">★</label>
+          </div>
+        </div>
+        <div class="feedback-rating-field">
+          <label>Communication</label>
+          <div class="star-rating">
+            <input type="radio" id="com5" name="rating_communication" value="5" required><label for="com5">★</label>
+            <input type="radio" id="com4" name="rating_communication" value="4"><label for="com4">★</label>
+            <input type="radio" id="com3" name="rating_communication" value="3"><label for="com3">★</label>
+            <input type="radio" id="com2" name="rating_communication" value="2"><label for="com2">★</label>
+            <input type="radio" id="com1" name="rating_communication" value="1"><label for="com1">★</label>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="feedback-submit">Submit feedback</button>
+      <div id="feedbackStatus" class="feedback-status"></div>
+    </form>
+  </div>
+</section>
+
 <footer>
   <span class="footer-copy">© 2026 Rebecca Kim</span>
   
@@ -296,6 +444,98 @@
     requestAnimationFrame(animate);
   }
   animate();
+
+  // Feedback wall — render approved entries from testimonials.json
+  (function() {
+    const wall = document.getElementById('feedbackWall');
+    if (!wall) return;
+    const CATEGORIES = [
+      { key: 'relations', label: 'Client & Stakeholder Relations' },
+      { key: 'execution', label: 'Strategic Execution' },
+      { key: 'communication', label: 'Communication' },
+    ];
+    function stars(n) {
+      let out = '';
+      for (let i = 1; i <= 5; i++) out += `<span class="${i <= n ? 'filled' : ''}">★</span>`;
+      return out;
+    }
+    function render(entries) {
+      if (!entries || !entries.length) {
+        wall.innerHTML = `
+          <div class="feedback-empty">
+            <div class="feedback-empty-title">No feedback yet</div>
+            <div class="feedback-empty-sub">Be the first to leave a note using the form.</div>
+          </div>`;
+        return;
+      }
+      wall.innerHTML = entries.map((e) => `
+        <div class="feedback-card">
+          <div class="feedback-card-head">
+            <div>
+              <div class="feedback-name">${escapeHtml(e.firstName)} ${escapeHtml(e.lastName)}</div>
+              <div class="feedback-role">${escapeHtml(e.title)} · ${escapeHtml(e.company)}</div>
+            </div>
+            <div class="feedback-ratings">
+              ${CATEGORIES.map((c) => `
+                <div class="feedback-rating-row">
+                  <span>${c.label}</span>
+                  <span class="feedback-stars">${stars((e.ratings && e.ratings[c.key]) || 0)}</span>
+                </div>`).join('')}
+            </div>
+          </div>
+          <p class="feedback-quote">${escapeHtml(e.comment)}</p>
+        </div>
+      `).join('');
+    }
+    function escapeHtml(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+      }[c]));
+    }
+    fetch('testimonials.json')
+      .then((r) => (r.ok ? r.json() : []))
+      .then(render)
+      .catch(() => render([]));
+  })();
+
+  // Feedback form — submit via Formspree without leaving the page
+  (function() {
+    const form = document.getElementById('feedbackForm');
+    const status = document.getElementById('feedbackStatus');
+    if (!form) return;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (form.action.includes('YOUR_FORM_ID')) {
+        status.textContent = 'Feedback form isn’t connected yet — set up Formspree first (see FEEDBACK-README.md).';
+        status.className = 'feedback-status err';
+        return;
+      }
+      const submitBtn = form.querySelector('.feedback-submit');
+      submitBtn.disabled = true;
+      status.textContent = 'Sending…';
+      status.className = 'feedback-status';
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        if (res.ok) {
+          status.textContent = 'Thank you — your feedback was sent for review.';
+          status.className = 'feedback-status ok';
+          form.reset();
+        } else {
+          status.textContent = 'Something went wrong. Please try again in a moment.';
+          status.className = 'feedback-status err';
+        }
+      } catch (err) {
+        status.textContent = 'Something went wrong. Please try again in a moment.';
+        status.className = 'feedback-status err';
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  })();
 
   // Collapsible nav
   (function() {
