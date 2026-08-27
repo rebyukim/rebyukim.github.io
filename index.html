@@ -24,11 +24,11 @@
   .nav-boat svg { width: 19px; height: 19px; }
   .nav-boat.visible { opacity: 1; pointer-events: auto; transform: scale(1); }
   .nav-boat:hover { background: var(--cream); border-color: var(--accent); color: var(--accent); }
-  .nav-panel { position: fixed; top: 24px; right: 48px; z-index: 102; min-width: 168px; background: rgba(245,240,232,0.78); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(217,208,196,0.7); border-radius: 26px; padding: 18px 10px; display: flex; flex-direction: column; gap: 2px; opacity: 0; transform: scale(0.92) translateY(-6px); pointer-events: none; transition: opacity 0.28s ease, transform 0.28s ease; box-shadow: 0 12px 40px rgba(26,22,18,0.14); }
+  .nav-panel { position: fixed; top: 24px; right: 48px; z-index: 102; min-width: 168px; background: rgba(196,98,45,0.92); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,240,228,0.3); border-radius: 26px; padding: 18px 10px; display: flex; flex-direction: column; gap: 2px; opacity: 0; transform: scale(0.92) translateY(-6px); pointer-events: none; transition: opacity 0.28s ease, transform 0.28s ease; box-shadow: 0 14px 44px rgba(74,30,10,0.4); }
   .nav-panel.open { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
-  .nav-panel a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-mid); text-decoration: none; text-align: center; padding: 12px 16px; border-radius: 16px; transition: color 0.2s, background 0.2s; }
-  .nav-panel a:hover { color: var(--accent); background: rgba(196,98,45,0.08); }
-  .nav-panel a.active { color: var(--accent); }
+  .nav-panel a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,240,232,0.72); text-decoration: none; text-align: center; padding: 12px 16px; border-radius: 16px; transition: color 0.2s, background 0.2s; }
+  .nav-panel a:hover { color: var(--cream); background: rgba(255,255,255,0.16); }
+  .nav-panel a.active { color: var(--cream); }
 
   #hero {
     min-height: 70vh;
@@ -303,6 +303,8 @@
     if (!navEl || !boat || !panel) return;
     const THRESHOLD = 80;
     let manualOpen = false;
+    let openScrollY = 0;
+    const CLOSE_DELTA = 32;
     function applyNavState() {
       const scrolled = window.scrollY > THRESHOLD;
       if (!scrolled) {
@@ -322,12 +324,23 @@
       }
     }
     window.addEventListener('scroll', () => {
-      if (manualOpen) manualOpen = false;
+      if (manualOpen) {
+        if (Math.abs(window.scrollY - openScrollY) < CLOSE_DELTA) return;
+        manualOpen = false;
+      }
       applyNavState();
     });
-    boat.addEventListener('click', () => {
+    boat.addEventListener('click', (e) => {
+      e.stopPropagation();
       manualOpen = true;
+      openScrollY = window.scrollY;
       applyNavState();
+    });
+    document.addEventListener('click', (e) => {
+      if (manualOpen && !panel.contains(e.target) && !boat.contains(e.target)) {
+        manualOpen = false;
+        applyNavState();
+      }
     });
     applyNavState();
   })();
