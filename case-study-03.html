@@ -21,6 +21,11 @@
   .nav-boat svg { width: 19px; height: 19px; }
   .nav-boat.visible { opacity: 1; pointer-events: auto; transform: scale(1); }
   .nav-boat:hover { background: var(--cream); border-color: var(--accent); color: var(--accent); }
+  .nav-panel { position: fixed; top: 24px; right: 48px; z-index: 102; min-width: 168px; background: rgba(245,240,232,0.78); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(217,208,196,0.7); border-radius: 26px; padding: 18px 10px; display: flex; flex-direction: column; gap: 2px; opacity: 0; transform: scale(0.92) translateY(-6px); pointer-events: none; transition: opacity 0.28s ease, transform 0.28s ease; box-shadow: 0 12px 40px rgba(26,22,18,0.14); }
+  .nav-panel.open { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
+  .nav-panel a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-mid); text-decoration: none; text-align: center; padding: 12px 16px; border-radius: 16px; transition: color 0.2s, background 0.2s; }
+  .nav-panel a:hover { color: var(--accent); background: rgba(196,98,45,0.08); }
+  .nav-panel a.active { color: var(--accent); }
 
   .case-hero { min-height: 65vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 140px 48px 80px; border-bottom: 1px solid var(--rule); position: relative; overflow: hidden; }
   .case-hero-bg { position: absolute; inset: 0; background: var(--ink); z-index: 0; }
@@ -109,6 +114,7 @@
   @media (max-width: 768px) {
     nav { padding: 20px 24px; }
     .nav-boat { display: none; }
+    .nav-panel { display: none; }
     .case-hero { padding: 120px 24px 60px; }
     .case-hero-meta { gap: 24px; }
     .tags-bar { padding: 20px 24px; gap: 16px; }
@@ -134,6 +140,9 @@
 <button type="button" class="nav-boat" id="navBoat" aria-label="Open navigation">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c2 3.2 4.8 4.5 7 4.5s5-1.3 7-4.5"/><path d="M12 15V5"/><path d="M12 6l5 5.5-5 1.2z" fill="currentColor" stroke="none"/></svg>
 </button>
+<div class="nav-panel" id="navPanel">
+  <a href="work.html">All Work</a>
+</div>
 
 <section class="case-hero">
   <div class="case-hero-bg"></div>
@@ -332,16 +341,26 @@
   (function() {
     const navEl = document.querySelector('nav');
     const boat = document.getElementById('navBoat');
-    if (!navEl || !boat) return;
+    const panel = document.getElementById('navPanel');
+    if (!navEl || !boat || !panel) return;
     const THRESHOLD = 80;
     let manualOpen = false;
     function applyNavState() {
-      if (window.scrollY <= THRESHOLD || manualOpen) {
+      const scrolled = window.scrollY > THRESHOLD;
+      if (!scrolled) {
         navEl.classList.remove('nav-hidden');
         boat.classList.remove('visible');
+        panel.classList.remove('open');
+        manualOpen = false;
       } else {
         navEl.classList.add('nav-hidden');
-        boat.classList.add('visible');
+        if (manualOpen) {
+          boat.classList.remove('visible');
+          panel.classList.add('open');
+        } else {
+          boat.classList.add('visible');
+          panel.classList.remove('open');
+        }
       }
     }
     window.addEventListener('scroll', () => {
