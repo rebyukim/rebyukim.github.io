@@ -30,18 +30,19 @@
   .case-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
   .case-title { font-size: clamp(40px, 6vw, 80px); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em; color: var(--cream); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.9s ease 0.35s forwards; }
   .case-title em { font-style: italic; color: var(--accent); }
-  .case-hero-meta { display: flex; gap: 48px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.9s ease 0.5s forwards; }
+  .case-hero-meta { display: flex; gap: 40px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.9s ease 0.5s forwards; }
   .meta-item { display: flex; flex-direction: column; gap: 4px; }
   .meta-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
   .meta-value { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.7); }
 
-  .stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--rule); }
-  .stat-block { padding: 52px 48px; border-right: 1px solid var(--rule); opacity: 0; animation: fadeUp 0.8s ease forwards; }
+  .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--rule); }
+  .stat-block { padding: 44px 32px; border-right: 1px solid var(--rule); opacity: 0; animation: fadeUp 0.8s ease forwards; }
   .stat-block:nth-child(1) { animation-delay: 0.6s; }
-  .stat-block:nth-child(2) { animation-delay: 0.75s; }
-  .stat-block:nth-child(3) { animation-delay: 0.9s; border-right: none; }
-  .stat-num { font-size: clamp(36px, 4vw, 56px); font-weight: 300; letter-spacing: -0.02em; color: var(--accent); line-height: 1; margin-bottom: 8px; }
-  .stat-desc { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm-mid); }
+  .stat-block:nth-child(2) { animation-delay: 0.7s; }
+  .stat-block:nth-child(3) { animation-delay: 0.8s; }
+  .stat-block:nth-child(4) { animation-delay: 0.9s; border-right: none; }
+  .stat-num { font-size: clamp(30px, 3.2vw, 46px); font-weight: 300; letter-spacing: -0.02em; color: var(--accent); line-height: 1; margin-bottom: 8px; }
+  .stat-desc { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-mid); }
 
   .case-section { display: grid; grid-template-columns: 220px 1fr; gap: 60px; padding: 80px 48px; border-bottom: 1px solid var(--rule); }
   .section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); padding-top: 6px; }
@@ -87,8 +88,8 @@
   @media (max-width: 768px) {
     nav { padding: 20px 24px; }
     .case-hero { padding: 120px 24px 60px; }
-    .stats-bar { grid-template-columns: 1fr; }
-    .stat-block { border-right: none; padding: 36px 24px; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+    .stat-block { border-right: none; padding: 32px 24px; border-bottom: 1px solid var(--rule); }
     .case-section { grid-template-columns: 1fr; gap: 20px; padding: 60px 24px; }
     .case-nav { padding: 40px 24px; flex-direction: column; gap: 24px; align-items: flex-start; }
     footer { padding: 24px; flex-direction: column; gap: 8px; }
@@ -108,20 +109,20 @@
 <section class="case-hero">
   <div class="case-hero-bg"></div>
   <div class="case-hero-content">
-    <p class="case-eyebrow">05 — Client & Stakeholder Relations · Samsung · LG Electronics · Onnuri English Ministry</p>
+    <p class="case-eyebrow">01 — Client & Stakeholder Relations · SMU/UCLA · LG (via HSAD) · Onnuri · Samsung (via Cheil)</p>
     <h1 class="case-title">The Throughline:<br><em>Stakeholder Trust.</em></h1>
     <div class="case-hero-meta">
       <div class="meta-item">
         <span class="meta-label">Organizations</span>
-        <span class="meta-value">Samsung · LG Electronics · Onnuri English Ministry</span>
+        <span class="meta-value">SMU/UCLA · LG (via HSAD) · Onnuri · Samsung (via Cheil USA)</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">Roles</span>
-        <span class="meta-value">Content Strategist → Program Manager → Media & Ops Lead</span>
+        <span class="meta-value">Project Specialist → Program Manager → Media Lead → Project Manager</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">Years</span>
-        <span class="meta-value">2022 – 2025</span>
+        <span class="meta-value">2016 – Present</span>
       </div>
       <div class="meta-item">
         <span class="meta-label">Scope</span>
@@ -133,16 +134,20 @@
 
 <div class="stats-bar">
   <div class="stat-block">
-    <div class="stat-num">25%</div>
-    <div class="stat-desc">Call volume reduction — Samsung</div>
+    <div class="stat-num">12+</div>
+    <div class="stat-desc">Partner institutions, SMU/UCLA</div>
   </div>
   <div class="stat-block">
-    <div class="stat-num">1.5M</div>
-    <div class="stat-desc">Personalized comms/mo — LG</div>
+    <div class="stat-num">85–90%</div>
+    <div class="stat-desc">Support resolution, LG SimRoom</div>
   </div>
   <div class="stat-block">
     <div class="stat-num">113%</div>
-    <div class="stat-desc">Reach growth — Onnuri</div>
+    <div class="stat-desc">Reach growth, Onnuri</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-num">5</div>
+    <div class="stat-desc">Product divisions, Samsung</div>
   </div>
 </div>
 
@@ -154,9 +159,9 @@
       <span class="section-label">Challenge</span>
     </div>
     <div class="section-content">
-      <h2>Same skill. <em>Three completely different rooms.</em></h2>
-      <p>Three organizations, three years, three totally different definitions of "stakeholder": a Fortune 500 electronics company's engineering and support teams, a global consumer brand's cross-functional leadership matrix, and an all-volunteer nonprofit media team with no formal reporting structure at all.</p>
-      <p>Each one needed the same underlying thing — someone who could earn trust quickly, translate complexity into a clear story, and turn that trust into measurable results — but none of them needed it delivered the same way.</p>
+      <h2>Same skill. <em>Four completely different rooms.</em></h2>
+      <p>Four organizations, four totally different definitions of "stakeholder": a federally funded research program spanning 12+ partner institutions, an agency-side pitch into a global electronics brand that hadn't agreed to build anything yet, an all-volunteer nonprofit media team with no infrastructure or process connecting the client side to the creative team pipeline, and a Fortune 500 company's day-to-day B2C/B2B web operation.</p>
+      <p>Each one handed me a new system, a new vocabulary, and stakeholders who needed answers yesterday. The job was always the same underneath: master the system fast, then use that mastery to actually move the numbers, not just narrate them. None of them needed it delivered the same way.</p>
     </div>
   </div>
 
@@ -167,7 +172,7 @@
     </div>
     <div class="section-content">
       <h2>One playbook. <em>Recalibrated each time.</em></h2>
-      <p>Regardless of the room, the method stays the same: understand what this specific audience actually needs before proposing anything, translate technical or data-heavy work into language they can act on, keep a communication cadence steady enough that people trust you before there's a problem, and follow through on the small things — because that's what the big trust is actually built from.</p>
+      <p>Regardless of the room, the method stays the same: understand what this specific audience actually needs before proposing anything, translate technical or data-heavy work into language they can act on, keep a communication cadence steady enough that people trust you before there's a problem, and follow through on the small things, because that's what the big trust is actually built from.</p>
       <p class="pull-quote">The stakeholders change. The relationship-first method doesn't.</p>
     </div>
   </div>
@@ -178,28 +183,33 @@
       <span class="section-label">What I Did</span>
     </div>
     <div class="section-content">
-      <h2>Three organizations, <em>one through-line.</em></h2>
+      <h2>Four organizations, <em>one throughline.</em></h2>
 
       <div class="narrative-block">
-        <div class="narrative-label"><span>Samsung Electronics America</span> — Content Strategist</div>
-        <p>Partnered with engineering and support teams to translate conversational AI performance data into content and flow changes that both human agents and the AI itself could act on — reducing call volume by 25% while improving chatbot response accuracy by 15%. The stakeholders here were internal and technical; the job was making sure a support strategist's recommendations landed as clearly for an engineer as they would for a customer.</p>
+        <div class="narrative-label"><span>SMU / UCLA</span> · Project Specialist</div>
+        <p>Owned operational execution for a $17M NIMH-funded, multi-site clinical research program with UCLA, serving as the primary point of contact for 12+ partner institutions on budget, timelines, and milestone delivery. Redesigned the participant experience journey using site-level data, reducing dropout by 20%.</p>
       </div>
 
       <div class="narrative-block">
-        <div class="narrative-label"><span>LG Electronics</span> — Program Manager, CX Innovation</div>
-        <p>Owned the stakeholder ecosystem behind a company-wide CX transformation — aligning Engineering, Data Science, and regional marketing teams around a shared post-purchase strategy. That alignment work is what made the results possible: 1.5M personalized communications generated monthly, a 15% increase in customer retention, and a 10-point NPS improvement. None of it holds together without every team trusting the same data and the same plan.</p>
+        <div class="narrative-label"><span>LG Electronics</span> · via HSAD · Program Manager, CX Innovation</div>
+        <p>Pitched LG SimRoom, a first-of-its-kind virtual TV showroom, while still on the agency side at HSAD, before LG had agreed to build it. Once greenlit, stayed on to own its adoption, scaling the platform until it resolved 85 to 90 percent of the support interactions it was built for, while aligning Engineering, Data Science, and regional marketing around a shared post-purchase strategy that generated 1.5M personalized communications monthly and a 10-point NPS improvement.</p>
       </div>
 
       <div class="narrative-block">
-        <div class="narrative-label"><span>Onnuri English Ministry</span> — Community Media & Operations Lead</div>
-        <p>Built trust with an all-volunteer team and a community audience, with no formal reporting structure to lean on. Mentored contributors, set a sustainable content cadence, and used engagement data to guide creative direction — doubling the team's output capacity while growing organic reach by 113%. The "stakeholders" here were volunteers and a community; the trust had to be earned, not assumed by title.</p>
+        <div class="narrative-label"><span>Onnuri English Ministry</span> · Community Media & Operations Lead</div>
+        <p>Built trust with an all-volunteer team and a community audience, with no infrastructure or process connecting the client side to the creative team pipeline. Mentored contributors, set a sustainable content cadence, and used engagement data to guide creative direction, doubling the team's output capacity while growing organic reach by 113%.</p>
+      </div>
+
+      <div class="narrative-block">
+        <div class="narrative-label"><span>Samsung Electronics America</span> · via Cheil USA · Project Manager, Digital Experience</div>
+        <p>Recruited to lead Samsung's transition from US-only systems to global JIRA and AEM platforms, building a 24/7 project governance framework across 5 product divisions. Serve as Cheil's day-to-day client contact for Samsung's Visual Display business, owning SLA performance and stakeholder alignment across the B2C/B2B Samsung.com ecosystem as the primary liaison between Marketing, CX, Creative, Product, QA, and Dev.</p>
       </div>
 
       <div class="tags-row">
         <span class="tag">Client & Stakeholder Relations</span>
         <span class="tag">Cross-functional Collaboration</span>
         <span class="tag">Data Storytelling</span>
-        <span class="tag">Trust Building</span>
+        <span class="tag">Agency-Client Partnerships</span>
         <span class="tag">Program Operations</span>
       </div>
     </div>
@@ -212,16 +222,16 @@
     </div>
     <div class="section-content">
       <h2>The range <em>is</em> the proof point.</h2>
-      <p>A Fortune 500 engineering team, a cross-functional corporate leadership matrix, and an all-volunteer nonprofit community don't have much in common on paper. But each one responded to the same approach: understand the audience first, translate the complexity, show up consistently, and let the results speak.</p>
-      <p>That's the muscle I bring to any client or stakeholder relationship — the ability to read a room I've never worked in before, figure out what "trust" looks like there, and earn it fast enough to move the work forward.</p>
+      <p>A federally funded research consortium, an agency-side pitch, an all-volunteer nonprofit, and a Fortune 500 e-commerce operation don't have much in common on paper. But each one responded to the same approach: understand the audience first, translate the complexity, show up consistently, and let the results speak.</p>
+      <p>That's the muscle I bring to any client or stakeholder relationship: the ability to read a room I've never worked in before, figure out what "trust" looks like there, and earn it fast enough to move the work forward.</p>
     </div>
   </div>
 
 </div>
 
 <div class="case-nav">
-  <a href="case-study-04.html" class="case-nav-link">← Previous project</a>
-  <a href="work.html" class="case-nav-link next">All work →</a>
+  <a href="work.html" class="case-nav-link">← Back to all work</a>
+  <a href="case-study-01.html" class="case-nav-link next">Next project →</a>
 </div>
 
 <footer>
