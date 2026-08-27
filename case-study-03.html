@@ -12,10 +12,15 @@
   body { background: var(--cream); color: var(--ink); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; line-height: 1.6; cursor: none; }
   .cursor { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s ease; }
   .cursor-ring { width: 32px; height: 32px; border: 1px solid var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.18s ease; opacity: 0.5; }
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 28px 48px; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 28px 48px; transition: opacity 0.3s ease, transform 0.3s ease; }
+  nav.nav-hidden { opacity: 0; transform: translateY(-16px); pointer-events: none; }
   .nav-name { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); text-decoration: none; }
   .nav-back { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); text-decoration: none; transition: color 0.2s; }
   .nav-back:hover { color: var(--accent); }
+  .nav-boat { position: fixed; top: 24px; right: 48px; z-index: 101; width: 44px; height: 44px; border-radius: 50%; background: rgba(245,240,232,0.45); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); border: 1px solid rgba(217,208,196,0.7); display: flex; align-items: center; justify-content: center; color: rgba(26,22,18,0.4); cursor: none; padding: 0; appearance: none; opacity: 0; pointer-events: none; transform: scale(0.85); transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.2s, color 0.2s, background 0.2s; }
+  .nav-boat svg { width: 19px; height: 19px; }
+  .nav-boat.visible { opacity: 1; pointer-events: auto; transform: scale(1); }
+  .nav-boat:hover { background: var(--cream); border-color: var(--accent); color: var(--accent); }
 
   .case-hero { min-height: 65vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 140px 48px 80px; border-bottom: 1px solid var(--rule); position: relative; overflow: hidden; }
   .case-hero-bg { position: absolute; inset: 0; background: var(--ink); z-index: 0; }
@@ -103,6 +108,7 @@
 
   @media (max-width: 768px) {
     nav { padding: 20px 24px; }
+    .nav-boat { display: none; }
     .case-hero { padding: 120px 24px 60px; }
     .case-hero-meta { gap: 24px; }
     .tags-bar { padding: 20px 24px; gap: 16px; }
@@ -125,6 +131,9 @@
   <a href="index.html" class="nav-name">Rebecca Kim</a>
   <a href="work.html" class="nav-back">← All Work</a>
 </nav>
+<button type="button" class="nav-boat" id="navBoat" aria-label="Open navigation">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c2 3.2 4.8 4.5 7 4.5s5-1.3 7-4.5"/><path d="M12 15V5"/><path d="M12 6l5 5.5-5 1.2z" fill="currentColor" stroke="none"/></svg>
+</button>
 
 <section class="case-hero">
   <div class="case-hero-bg"></div>
@@ -181,7 +190,7 @@
 
   <div class="case-section reveal">
     <div class="section-label-wrap">
-      <div class="section-icon icon-challenge"><svg viewBox="0 0 24 24" fill="none" stroke="#C4622D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+      <div class="section-icon icon-challenge"><svg viewBox="0 0 24 24" fill="none" stroke="#C4622D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l6-9 4 5.5 3-4 5 7.5H3z"/><circle cx="17" cy="6" r="2"/></svg></div>
       <span class="section-label">Challenge</span>
     </div>
     <div class="section-content">
@@ -318,6 +327,33 @@
   }
   window.addEventListener('scroll', updateNav);
   updateNav();
+
+  // Collapsible nav
+  (function() {
+    const navEl = document.querySelector('nav');
+    const boat = document.getElementById('navBoat');
+    if (!navEl || !boat) return;
+    const THRESHOLD = 80;
+    let manualOpen = false;
+    function applyNavState() {
+      if (window.scrollY <= THRESHOLD || manualOpen) {
+        navEl.classList.remove('nav-hidden');
+        boat.classList.remove('visible');
+      } else {
+        navEl.classList.add('nav-hidden');
+        boat.classList.add('visible');
+      }
+    }
+    window.addEventListener('scroll', () => {
+      if (manualOpen) manualOpen = false;
+      applyNavState();
+    });
+    boat.addEventListener('click', () => {
+      manualOpen = true;
+      applyNavState();
+    });
+    applyNavState();
+  })();
 </script>
 </body>
 </html>

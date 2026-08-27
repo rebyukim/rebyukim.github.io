@@ -12,12 +12,17 @@
   .cursor { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s ease; }
   .cursor-ring { width: 32px; height: 32px; border: 1px solid var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.18s ease; opacity: 0.5; }
 
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 28px 48px; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 28px 48px; transition: opacity 0.3s ease, transform 0.3s ease; }
+  nav.nav-hidden { opacity: 0; transform: translateY(-16px); pointer-events: none; }
   .nav-name { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
   .nav-links { display: flex; gap: 36px; list-style: none; }
   .nav-links a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-mid); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover { color: var(--accent); }
   .nav-links a.active { color: var(--accent); }
+  .nav-boat { position: fixed; top: 24px; right: 48px; z-index: 101; width: 44px; height: 44px; border-radius: 50%; background: rgba(245,240,232,0.45); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); border: 1px solid rgba(217,208,196,0.7); display: flex; align-items: center; justify-content: center; color: rgba(26,22,18,0.4); cursor: none; padding: 0; appearance: none; opacity: 0; pointer-events: none; transform: scale(0.85); transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.2s, color 0.2s, background 0.2s; }
+  .nav-boat svg { width: 19px; height: 19px; }
+  .nav-boat.visible { opacity: 1; pointer-events: auto; transform: scale(1); }
+  .nav-boat:hover { background: var(--cream); border-color: var(--accent); color: var(--accent); }
 
   .page-header {
     padding: 160px 48px 100px;
@@ -106,6 +111,7 @@
   @media (max-width: 768px) {
     nav { padding: 20px 24px; }
     .nav-links { display: none; }
+    .nav-boat { display: none; }
     .page-header { padding: 120px 24px 60px; }
     .about-grid { grid-template-columns: 1fr; padding: 60px 24px; }
     .about-sidebar { position: static; }
@@ -126,12 +132,16 @@
 <nav>
   <a href="index.html" class="nav-name">Rebecca Kim</a>
   <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="about.html" class="active">About</a></li>
     <li><a href="experience.html">Experience</a></li>
     <li><a href="work.html">Work</a></li>
     <li><a href="index.html#contact">Contact</a></li>
   </ul>
 </nav>
+<button type="button" class="nav-boat" id="navBoat" aria-label="Open navigation">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c2 3.2 4.8 4.5 7 4.5s5-1.3 7-4.5"/><path d="M12 15V5"/><path d="M12 6l5 5.5-5 1.2z" fill="currentColor" stroke="none"/></svg>
+</button>
 
 <div class="page-header">
   <p class="page-eyebrow">The person behind the work</p>
@@ -262,6 +272,33 @@
   }, { threshold: 0.05 });
   revealEls.forEach(el => observer.observe(el));
   setTimeout(() => { revealEls.forEach(el => el.classList.add('visible')); }, 1000);
+
+  // Collapsible nav
+  (function() {
+    const navEl = document.querySelector('nav');
+    const boat = document.getElementById('navBoat');
+    if (!navEl || !boat) return;
+    const THRESHOLD = 80;
+    let manualOpen = false;
+    function applyNavState() {
+      if (window.scrollY <= THRESHOLD || manualOpen) {
+        navEl.classList.remove('nav-hidden');
+        boat.classList.remove('visible');
+      } else {
+        navEl.classList.add('nav-hidden');
+        boat.classList.add('visible');
+      }
+    }
+    window.addEventListener('scroll', () => {
+      if (manualOpen) manualOpen = false;
+      applyNavState();
+    });
+    boat.addEventListener('click', () => {
+      manualOpen = true;
+      applyNavState();
+    });
+    applyNavState();
+  })();
 </script>
 </body>
 </html>
