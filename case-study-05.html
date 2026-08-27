@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Throughline: Stakeholder Trust — Rebecca Kim</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --ink: #1A1612;
+    --warm-mid: #8C7B6B;
+    --accent: #C4622D;
+    --rule: #D9D0C4;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--ink); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; line-height: 1.6; cursor: none; }
+  .cursor { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
+  .cursor-ring { width: 32px; height: 32px; border: 1px solid var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); opacity: 0.5; transition: transform 0.18s ease; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 28px 48px; }
+  .nav-name { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); text-decoration: none; }
+  .nav-back { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--accent); }
+
+  .case-hero { min-height: 65vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 140px 48px 80px; border-bottom: 1px solid var(--rule); position: relative; overflow: hidden; }
+  .case-hero-bg { position: absolute; inset: 0; background: #1A1612; z-index: 0; }
+  .case-hero-content { position: relative; z-index: 1; max-width: 800px; }
+  .case-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+  .case-title { font-size: clamp(40px, 6vw, 80px); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em; color: var(--cream); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.9s ease 0.35s forwards; }
+  .case-title em { font-style: italic; color: var(--accent); }
+  .case-hero-meta { display: flex; gap: 48px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.9s ease 0.5s forwards; }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+  .meta-value { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.7); }
+
+  .stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--rule); }
+  .stat-block { padding: 52px 48px; border-right: 1px solid var(--rule); opacity: 0; animation: fadeUp 0.8s ease forwards; }
+  .stat-block:nth-child(1) { animation-delay: 0.6s; }
+  .stat-block:nth-child(2) { animation-delay: 0.75s; }
+  .stat-block:nth-child(3) { animation-delay: 0.9s; border-right: none; }
+  .stat-num { font-size: clamp(36px, 4vw, 56px); font-weight: 300; letter-spacing: -0.02em; color: var(--accent); line-height: 1; margin-bottom: 8px; }
+  .stat-desc { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm-mid); }
+
+  .case-section { display: grid; grid-template-columns: 220px 1fr; gap: 60px; padding: 80px 48px; border-bottom: 1px solid var(--rule); }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); padding-top: 6px; }
+  .section-label-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding-top: 4px; }
+  .section-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .section-icon svg { width: 20px; height: 20px; }
+  .icon-challenge { background: rgba(196,98,45,0.12); }
+  .icon-approach { background: rgba(100,130,200,0.12); }
+  .icon-whatidid { background: rgba(60,160,100,0.12); }
+  .icon-results { background: rgba(60,160,100,0.12); }
+  .section-content h2 { font-size: clamp(26px, 3vw, 38px); font-weight: 300; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 24px; }
+  .section-content h2 em { font-style: italic; color: var(--accent); }
+  .section-content p { font-size: 17px; font-weight: 300; color: var(--warm-mid); line-height: 1.8; margin-bottom: 20px; max-width: 640px; }
+  .section-content p:last-child { margin-bottom: 0; }
+
+  .narrative-block { max-width: 640px; padding-top: 28px; margin-top: 28px; border-top: 1px solid var(--rule); }
+  .narrative-block:first-of-type { padding-top: 0; margin-top: 0; border-top: none; }
+  .narrative-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); margin-bottom: 12px; }
+  .narrative-label span { color: var(--accent); }
+  .narrative-block p { margin-bottom: 0; }
+
+  .tags-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
+  .tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 5px 12px; }
+
+  .pull-quote { font-style: italic; font-size: 22px; color: var(--ink); border-left: 2px solid var(--accent); padding-left: 24px; margin: 8px 0; line-height: 1.6; max-width: 620px; }
+
+  .case-nav { display: flex; justify-content: space-between; align-items: center; padding: 48px 48px; }
+  .case-nav-link { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; display: flex; align-items: center; gap: 10px; }
+  .case-nav-link:hover { color: var(--accent); border-color: var(--accent); }
+  .case-nav-link.next { flex-direction: row-reverse; }
+
+  footer { padding: 32px 48px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-mid); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--rule); }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .case-hero { padding: 120px 24px 60px; }
+    .stats-bar { grid-template-columns: 1fr; }
+    .stat-block { border-right: none; padding: 36px 24px; }
+    .case-section { grid-template-columns: 1fr; gap: 20px; padding: 60px 24px; }
+    .case-nav { padding: 40px 24px; flex-direction: column; gap: 24px; align-items: flex-start; }
+    footer { padding: 24px; flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-name">Rebecca Kim</a>
+  <a href="work.html" class="nav-back">← All Work</a>
+</nav>
+
+<section class="case-hero">
+  <div class="case-hero-bg"></div>
+  <div class="case-hero-content">
+    <p class="case-eyebrow">05 — Client & Stakeholder Relations · Samsung · LG Electronics · Onnuri English Ministry</p>
+    <h1 class="case-title">The Throughline:<br><em>Stakeholder Trust.</em></h1>
+    <div class="case-hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Organizations</span>
+        <span class="meta-value">Samsung · LG Electronics · Onnuri English Ministry</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Roles</span>
+        <span class="meta-value">Content Strategist → Program Manager → Media & Ops Lead</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Years</span>
+        <span class="meta-value">2022 – 2025</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Scope</span>
+        <span class="meta-value">Client & Stakeholder Relations</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat-block">
+    <div class="stat-num">25%</div>
+    <div class="stat-desc">Call volume reduction — Samsung</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-num">1.5M</div>
+    <div class="stat-desc">Personalized comms/mo — LG</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-num">113%</div>
+    <div class="stat-desc">Reach growth — Onnuri</div>
+  </div>
+</div>
+
+<div class="case-body">
+
+  <div class="case-section reveal">
+    <div class="section-label-wrap">
+      <div class="section-icon icon-challenge"><svg viewBox="0 0 24 24" fill="none" stroke="#C4622D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+      <span class="section-label">Challenge</span>
+    </div>
+    <div class="section-content">
+      <h2>Same skill. <em>Three completely different rooms.</em></h2>
+      <p>Three organizations, three years, three totally different definitions of "stakeholder": a Fortune 500 electronics company's engineering and support teams, a global consumer brand's cross-functional leadership matrix, and an all-volunteer nonprofit media team with no formal reporting structure at all.</p>
+      <p>Each one needed the same underlying thing — someone who could earn trust quickly, translate complexity into a clear story, and turn that trust into measurable results — but none of them needed it delivered the same way.</p>
+    </div>
+  </div>
+
+  <div class="case-section reveal">
+    <div class="section-label-wrap">
+      <div class="section-icon icon-approach"><svg viewBox="0 0 24 24" fill="none" stroke="#4A7CC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg></div>
+      <span class="section-label">Approach</span>
+    </div>
+    <div class="section-content">
+      <h2>One playbook. <em>Recalibrated each time.</em></h2>
+      <p>Regardless of the room, the method stays the same: understand what this specific audience actually needs before proposing anything, translate technical or data-heavy work into language they can act on, keep a communication cadence steady enough that people trust you before there's a problem, and follow through on the small things — because that's what the big trust is actually built from.</p>
+      <p class="pull-quote">The stakeholders change. The relationship-first method doesn't.</p>
+    </div>
+  </div>
+
+  <div class="case-section reveal">
+    <div class="section-label-wrap">
+      <div class="section-icon icon-whatidid"><svg viewBox="0 0 24 24" fill="none" stroke="#3CA064" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="section-label">What I Did</span>
+    </div>
+    <div class="section-content">
+      <h2>Three organizations, <em>one through-line.</em></h2>
+
+      <div class="narrative-block">
+        <div class="narrative-label"><span>Samsung Electronics America</span> — Content Strategist</div>
+        <p>Partnered with engineering and support teams to translate conversational AI performance data into content and flow changes that both human agents and the AI itself could act on — reducing call volume by 25% while improving chatbot response accuracy by 15%. The stakeholders here were internal and technical; the job was making sure a support strategist's recommendations landed as clearly for an engineer as they would for a customer.</p>
+      </div>
+
+      <div class="narrative-block">
+        <div class="narrative-label"><span>LG Electronics</span> — Program Manager, CX Innovation</div>
+        <p>Owned the stakeholder ecosystem behind a company-wide CX transformation — aligning Engineering, Data Science, and regional marketing teams around a shared post-purchase strategy. That alignment work is what made the results possible: 1.5M personalized communications generated monthly, a 15% increase in customer retention, and a 10-point NPS improvement. None of it holds together without every team trusting the same data and the same plan.</p>
+      </div>
+
+      <div class="narrative-block">
+        <div class="narrative-label"><span>Onnuri English Ministry</span> — Community Media & Operations Lead</div>
+        <p>Built trust with an all-volunteer team and a community audience, with no formal reporting structure to lean on. Mentored contributors, set a sustainable content cadence, and used engagement data to guide creative direction — doubling the team's output capacity while growing organic reach by 113%. The "stakeholders" here were volunteers and a community; the trust had to be earned, not assumed by title.</p>
+      </div>
+
+      <div class="tags-row">
+        <span class="tag">Client & Stakeholder Relations</span>
+        <span class="tag">Cross-functional Collaboration</span>
+        <span class="tag">Data Storytelling</span>
+        <span class="tag">Trust Building</span>
+        <span class="tag">Program Operations</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-section reveal">
+    <div class="section-label-wrap">
+      <div class="section-icon icon-results"><svg viewBox="0 0 24 24" fill="none" stroke="#3CA064" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="section-label">Results</span>
+    </div>
+    <div class="section-content">
+      <h2>The range <em>is</em> the proof point.</h2>
+      <p>A Fortune 500 engineering team, a cross-functional corporate leadership matrix, and an all-volunteer nonprofit community don't have much in common on paper. But each one responded to the same approach: understand the audience first, translate the complexity, show up consistently, and let the results speak.</p>
+      <p>That's the muscle I bring to any client or stakeholder relationship — the ability to read a room I've never worked in before, figure out what "trust" looks like there, and earn it fast enough to move the work forward.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="case-nav">
+  <a href="case-study-04.html" class="case-nav-link">← Previous project</a>
+  <a href="work.html" class="case-nav-link next">All work →</a>
+</div>
+
+<footer>
+  <span class="footer-copy">© 2026 Rebecca Kim</span>
+
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 60);
+  });
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), 80); observer.unobserve(entry.target); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Nav color swap on scroll past hero
+  const navName = document.querySelector('.nav-name');
+  const navBack = document.querySelector('.nav-back');
+  const hero = document.querySelector('.case-hero');
+  function updateNav() {
+    if (!hero) return;
+    const heroBottom = hero.getBoundingClientRect().bottom;
+    if (heroBottom <= 0) {
+      navName.style.color = 'var(--warm-mid)';
+      navBack.style.color = 'var(--warm-mid)';
+    } else {
+      navName.style.color = 'var(--accent)';
+      navBack.style.color = 'var(--accent)';
+    }
+  }
+  window.addEventListener('scroll', updateNav);
+  updateNav();
+</script>
+</body>
+</html>
