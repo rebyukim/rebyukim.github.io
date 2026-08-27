@@ -17,21 +17,17 @@ this:
 This keeps the wall spam-free and fully under your control — nothing goes public
 without you choosing to add it.
 
-## One-time setup (required before the form works)
+## One-time setup — done ✅
 
-1. Go to [formspree.io](https://formspree.io) and create a free account.
-2. Create a new form. Formspree gives you an endpoint like
-   `https://formspree.io/f/abcd1234`.
-3. Open `index.html`, find this line (search for `YOUR_FORM_ID`):
-   ```html
-   <form id="feedbackForm" class="feedback-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-   ```
-   Replace `YOUR_FORM_ID` with your real form ID.
-4. Commit and push. That's it — submissions will now land in your Formspree
-   dashboard and be emailed to you.
+The form is already connected to your Formspree endpoint
+(`https://formspree.io/f/mkjnwelb`), so submissions land straight in your
+Formspree dashboard and inbox. Nothing left to configure.
 
-Until step 3 is done, the form shows a friendly "not connected yet" message
-instead of silently failing.
+If you ever need to reconnect it to a different Formspree form, open
+`index.html` and update the `action` attribute on this line:
+```html
+<form id="feedbackForm" class="feedback-form" action="https://formspree.io/f/mkjnwelb" method="POST">
+```
 
 ## Adding an approved entry to the wall
 
