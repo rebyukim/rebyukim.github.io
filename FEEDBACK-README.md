@@ -41,11 +41,17 @@ Open `testimonials.json` and add an object to the array:
   "title": "VP of Customer Experience",
   "comment": "Rebecca led our post-purchase CX overhaul end to end...",
   "ratings": { "relations": 5, "execution": 5, "communication": 4 },
+  "linkedin": "https://www.linkedin.com/in/jane-doe/",
   "date": "2026-09-01"
 }
 ```
 
 - `ratings` values are 1–5.
+- `linkedin` is optional — if present, a small "LinkedIn ↗" link shows under the
+  person's name/title on their card, opening in a new tab. The email address
+  from the form submission is never published on the wall (there's no field for
+  it in this schema) — if you want a person's card to link out, add their
+  LinkedIn URL here instead of an email.
 - Order in the array = display order (newest first is typical — put new entries
   at the top).
 - `date` isn't currently shown on the card, but keeping it lets you sort/curate

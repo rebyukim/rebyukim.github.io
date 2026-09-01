@@ -99,6 +99,8 @@
   .feedback-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
   .feedback-name { font-size: 18px; font-weight: 400; color: var(--ink); }
   .feedback-role { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--warm-mid); margin-top: 4px; }
+  .feedback-linkedin { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); text-decoration: none; margin-top: 8px; display: inline-block; transition: opacity 0.2s; }
+  .feedback-linkedin:hover { opacity: 0.65; }
   .feedback-ratings { display: flex; flex-direction: column; gap: 3px; flex-shrink: 0; }
   .feedback-rating-row { display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 8.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--warm-mid); }
   .feedback-stars { color: var(--rule); font-size: 12px; letter-spacing: 1px; }
@@ -474,6 +476,7 @@
             <div>
               <div class="feedback-name">${escapeHtml(e.firstName)} ${escapeHtml(e.lastName)}</div>
               <div class="feedback-role">${escapeHtml(e.title)} · ${escapeHtml(e.company)}</div>
+              ${e.linkedin ? `<a class="feedback-linkedin" href="${escapeHtml(e.linkedin)}" target="_blank" rel="noopener">LinkedIn ↗</a>` : ''}
             </div>
             <div class="feedback-ratings">
               ${CATEGORIES.map((c) => `

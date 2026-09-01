@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "firstName": "Cameron",
+    "lastName": "Spink",
+    "company": "Cheil USA",
+    "title": "Project Manager",
+    "comment": "Rebecca is an outstanding project manager whose reliability and strategic thinking elevate every initiative she touches. She consistently demonstrates strong ownership across complex digital experience projects, ensuring timelines, deliverables, and cross-functional alignment remain on track even in fast-moving environments. Her communication is clear, structured, and proactive, making her a trusted partner for stakeholders and teammates alike. Rebecca's ability to anticipate risks, streamline workflows, and maintain a calm, solutions oriented mindset makes her an invaluable asset to our team at Cheil. She strengthens our execution quality and contributes meaningfully to the success of our Samsung digital programs.",
+    "ratings": { "relations": 5, "execution": 5, "communication": 5 },
+    "linkedin": "https://www.linkedin.com/in/cameron-spink-3321701a1/",
+    "date": "2026-09-01"
+  },
+  {
+    "firstName": "Anna",
+    "lastName": "Japitana",
+    "company": "Samsung Electronics America",
+    "title": "e-commerce Operations Lead",
+    "comment": "I had the pleasure of working with Rebecca as the Project Manager for my category. She is organized, polished, and highly accountable, with a strong ability to build effective cross-functional relationships. She was a reliable and collaborative partner, and I would highly recommend her.",
+    "ratings": { "relations": 5, "execution": 5, "communication": 5 },
+    "linkedin": "https://www.linkedin.com/in/anna-j-b96400176/",
+    "date": "2026-09-01"
+  },
+  {
+    "firstName": "Kat",
+    "lastName": "Pichik",
+    "company": "Co-",
+    "title": "Creative Lead",
+    "comment": "Worked with Rebecca on brand strategy for my startup and she was great to have in the room, taking a messy, early-stage idea and actually turning it into something coherent we, and people, could rally behind. Sharp strategically, but also just easy to work with, which counts for a lot. Would bring her back for anything brand or creative-strategy related!",
+    "ratings": { "relations": 5, "execution": 5, "communication": 5 },
+    "linkedin": "https://www.linkedin.com/in/kat-p-r/",
+    "date": "2026-09-01"
+  }
+]
