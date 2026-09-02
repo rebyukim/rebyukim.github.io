@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCN Group: Experiential Events | Rebecca Kim</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --ink: #1A1612;
+    --warm-mid: #5A4A3C;
+    --accent: #C4622D;
+    --rule: #D9D0C4;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--ink); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; line-height: 1.6; cursor: none; }
+  .cursor { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s ease; }
+  .cursor-ring { width: 32px; height: 32px; border: 1px solid var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.18s ease; opacity: 0.5; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 28px 48px; transition: opacity 0.3s ease, transform 0.3s ease; }
+  nav.nav-hidden { opacity: 0; transform: translateY(-16px); pointer-events: none; }
+  .nav-name { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); text-decoration: none; }
+  .nav-back { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--accent); }
+  .nav-boat { position: fixed; top: 24px; right: 48px; z-index: 101; width: 44px; height: 44px; border-radius: 50%; background: rgba(245,240,232,0.45); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); border: 1px solid rgba(217,208,196,0.7); display: flex; align-items: center; justify-content: center; color: rgba(26,22,18,0.4); cursor: none; padding: 0; appearance: none; opacity: 0; pointer-events: none; transform: scale(0.85); transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.2s, color 0.2s, background 0.2s; }
+  .nav-boat svg { width: 19px; height: 19px; }
+  .nav-boat.visible { opacity: 1; pointer-events: auto; transform: scale(1); }
+  .nav-boat:hover { background: var(--cream); border-color: var(--accent); color: var(--accent); }
+  .nav-panel { position: fixed; top: 24px; right: 48px; z-index: 102; min-width: 168px; background: rgba(196,98,45,0.92); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,240,228,0.3); border-radius: 26px; padding: 18px 10px; display: flex; flex-direction: column; gap: 2px; opacity: 0; transform: scale(0.92) translateY(-6px); pointer-events: none; transition: opacity 0.28s ease, transform 0.28s ease; box-shadow: 0 14px 44px rgba(74,30,10,0.4); }
+  .nav-panel.open { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
+  .nav-panel a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,240,232,0.72); text-decoration: none; text-align: center; padding: 12px 16px; border-radius: 16px; transition: color 0.2s, background 0.2s; }
+  .nav-panel a:hover { color: var(--cream); background: rgba(255,255,255,0.16); }
+  .nav-panel a.active { color: var(--cream); }
+
+  /* Hero */
+  .case-hero { min-height: 65vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 140px 48px 80px; border-bottom: 1px solid var(--rule); position: relative; overflow: hidden; }
+  .case-hero-bg { position: absolute; inset: 0; background: var(--ink); z-index: 0; }
+  .case-hero-content { position: relative; z-index: 1; max-width: 840px; }
+  .case-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+  .case-title { font-size: clamp(40px, 6vw, 80px); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em; color: var(--cream); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.9s ease 0.35s forwards; }
+  .case-title em { font-style: italic; color: var(--accent); }
+  .case-hero-meta { display: flex; gap: 48px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.9s ease 0.5s forwards; }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+  .meta-value { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.7); }
+
+  /* Tags bar */
+  .tags-bar { border-bottom: 1px solid var(--rule); padding: 28px 48px; display: flex; align-items: center; gap: 32px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s ease 0.65s forwards; }
+  .tags-bar-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--warm-mid); white-space: nowrap; }
+  .tags-bar-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 5px 12px; }
+
+  /* Stats bar */
+  .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--rule); }
+  .stat-block { padding: 44px 40px; border-right: 1px solid var(--rule); opacity: 0; animation: fadeUp 0.8s ease forwards; }
+  .stat-block:nth-child(1) { animation-delay: 0.7s; }
+  .stat-block:nth-child(2) { animation-delay: 0.82s; }
+  .stat-block:nth-child(3) { animation-delay: 0.94s; }
+  .stat-block:nth-child(4) { animation-delay: 1.06s; border-right: none; }
+  .stat-num { font-size: clamp(28px, 3.5vw, 48px); font-weight: 300; letter-spacing: -0.02em; color: var(--accent); line-height: 1; margin-bottom: 8px; }
+  .stat-desc { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-mid); line-height: 1.5; }
+
+  /* Body */
+  .case-section { display: grid; grid-template-columns: 220px 1fr; gap: 60px; padding: 80px 48px; border-bottom: 1px solid var(--rule); }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); padding-top: 6px; }
+  .section-label-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding-top: 4px; }
+  .section-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .section-icon svg { width: 20px; height: 20px; }
+  .icon-challenge { background: rgba(196,98,45,0.12); }
+  .icon-approach { background: rgba(100,130,200,0.12); }
+  .icon-action { background: rgba(200,160,40,0.12); }
+  .icon-results { background: rgba(60,160,100,0.12); }
+  .icon-learning { background: rgba(140,90,200,0.12); }
+  .section-content h2 { font-size: clamp(26px, 3vw, 38px); font-weight: 300; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 24px; }
+  .section-content h2 em { font-style: italic; color: var(--accent); }
+  .section-content p { font-size: 17px; font-weight: 300; color: var(--warm-mid); line-height: 1.8; margin-bottom: 20px; max-width: 640px; }
+  .section-content p:last-child { margin-bottom: 0; }
+
+  .pull-quote { font-style: italic; font-size: 22px; color: var(--ink); border-left: 2px solid var(--accent); padding-left: 24px; margin: 8px 0 28px; line-height: 1.6; max-width: 620px; }
+
+  /* Narrative blocks */
+  .narrative-block { max-width: 640px; padding-top: 28px; margin-top: 28px; border-top: 1px solid var(--rule); }
+  .narrative-block:first-of-type { padding-top: 0; margin-top: 0; border-top: none; }
+  .narrative-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); margin-bottom: 12px; }
+  .narrative-label span { color: var(--accent); }
+  .narrative-block p { margin-bottom: 0; }
+
+  .tags-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
+
+  /* Gallery */
+  .gallery-section { padding: 80px 48px; border-bottom: 1px solid var(--rule); }
+  .gallery-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 36px; }
+  .gallery-grid { display: grid; grid-template-columns: 320px 1fr; gap: 40px; align-items: center; }
+  .gallery-item a { display: block; overflow: hidden; cursor: none; background: var(--ink); }
+  .gallery-item img { width: 100%; height: auto; display: block; transition: transform 0.5s ease; }
+  .gallery-item:hover img { transform: scale(1.02); }
+  .gallery-note h3 { font-size: clamp(22px, 2.6vw, 30px); font-weight: 300; line-height: 1.25; margin-bottom: 16px; }
+  .gallery-note h3 em { font-style: italic; color: var(--accent); }
+  .gallery-note p { font-size: 16px; font-weight: 300; color: var(--warm-mid); line-height: 1.8; max-width: 480px; }
+  .gallery-caption { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-mid); padding: 14px 0 4px; line-height: 1.6; }
+
+  /* Key Learning */
+  .key-learning { padding: 80px 48px; border-bottom: 1px solid var(--rule); background: #EDE8DF; }
+  .key-learning-inner { max-width: 720px; }
+  .kl-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
+  .kl-text { font-size: clamp(18px, 2.2vw, 26px); font-weight: 300; line-height: 1.6; letter-spacing: -0.01em; color: var(--ink); }
+  .kl-text em { font-style: italic; color: var(--accent); }
+
+  /* Partners */
+  .partners-section { padding: 80px 48px; border-bottom: 1px solid var(--rule); }
+  .partners-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 32px; }
+  .partners-brand-row { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
+  .partners-brand-row img { height: 30px; width: auto; display: block; }
+  .partners-brand-row span { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-mid); }
+  .partners-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+  .partner-card { background: #EDE8DF; padding: 30px 26px; display: flex; flex-direction: column; align-items: flex-start; min-height: 200px; text-decoration: none; color: var(--ink); transition: background 0.3s; cursor: none; }
+  a.partner-card:hover { background: #E5DDD0; }
+  .partner-card.no-link { cursor: default; }
+  .partner-logo-img { max-width: 100%; max-height: 46px; width: auto; object-fit: contain; margin-bottom: auto; }
+  .partner-photo { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; margin-bottom: 16px; }
+  .partner-logo-tile { width: 100%; aspect-ratio: 1 / 1; object-fit: contain; display: block; margin-bottom: 16px; }
+  .partner-wordmark { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 24px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.2; margin-bottom: auto; }
+  .partner-meta { margin-top: 18px; }
+  .partner-role { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+  .partner-location { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-mid); }
+
+  /* Nav */
+  .case-nav { display: flex; justify-content: space-between; align-items: center; padding: 48px; }
+  .case-nav-link { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; display: flex; align-items: center; gap: 10px; }
+  .case-nav-link:hover { color: var(--accent); border-color: var(--accent); }
+  .case-nav-link.next { flex-direction: row-reverse; }
+
+  footer { padding: 32px 48px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-mid); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--rule); }
+
+  @media (max-width: 768px) {
+    .cursor, .cursor-ring { display: none; }
+    body { cursor: auto; }
+    nav { padding: 20px 24px; }
+    .nav-boat { display: none; }
+    .nav-panel { display: none; }
+    .case-hero { padding: 120px 24px 60px; }
+    .case-hero-meta { gap: 24px; }
+    .tags-bar { padding: 20px 24px; gap: 16px; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+    .stat-block:nth-child(2) { border-right: none; }
+    .stat-block { padding: 32px 24px; }
+    .case-section { grid-template-columns: 1fr; gap: 20px; padding: 60px 24px; }
+    .gallery-section { padding: 60px 24px; }
+    .gallery-grid { grid-template-columns: 1fr; gap: 24px; }
+    .key-learning { padding: 60px 24px; }
+    .partners-section { padding: 60px 24px; }
+    .partners-grid { grid-template-columns: 1fr; }
+    .case-nav { padding: 40px 24px; flex-direction: column; gap: 24px; align-items: flex-start; }
+    footer { padding: 24px; flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-name">Rebecca Kim</a>
+  <a href="work.html" class="nav-back">← All Work</a>
+</nav>
+<button type="button" class="nav-boat" id="navBoat" aria-label="Open navigation">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c2 3.2 4.8 4.5 7 4.5s5-1.3 7-4.5"/><path d="M12 15V5"/><path d="M12 6l5 5.5-5 1.2z" fill="currentColor" stroke="none"/></svg>
+</button>
+<div class="nav-panel" id="navPanel">
+  <a href="work.html">All Work</a>
+</div>
+
+<section class="case-hero">
+  <div class="case-hero-bg"></div>
+  <div class="case-hero-content">
+    <p class="case-eyebrow">06 · Founder · Experiential Events, Dallas–Fort Worth</p>
+    <h1 class="case-title">MCN Group:<br><em>Experiential Events.</em></h1>
+    <div class="case-hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Organizations</span>
+        <span class="meta-value">MCN Group LLC · Mighty Chick Pocha · VIBE Lounge · Mad for Chicken</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Role</span>
+        <span class="meta-value">Founder — Creative Direction, Venue & Vendor Relations</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Years</span>
+        <span class="meta-value">Aug 2022 – Jan 2024</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Scope</span>
+        <span class="meta-value">Experiential Events · Venue Relations · Creative Ops</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="tags-bar">
+  <span class="tags-bar-label">Tags</span>
+  <div class="tags-bar-tags">
+    <span class="tag">Event Production</span>
+    <span class="tag">Venue Relations</span>
+    <span class="tag">Vendor Management</span>
+    <span class="tag">Creative Direction</span>
+    <span class="tag">Staffing & Ops</span>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-block">
+    <div class="stat-num">6</div>
+    <div class="stat-desc">Curated events produced, Dallas–Fort Worth metroplex</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-num">60 to 550</div>
+    <div class="stat-desc">Guest scale across events, from intimate activations to the flagship</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-num">4</div>
+    <div class="stat-desc">Core team, plus contracted design & media talent</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-num">3</div>
+    <div class="stat-desc">DFW venue partnerships scouted and secured</div>
+  </div>
+</div>
+
+<div class="case-body">
+
+  <div class="case-section reveal">
+    <div class="section-label-wrap">
+      <div class="section-icon icon-challenge"><svg viewBox="0 0 24 24" fill="none" stroke="#C4622D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l6-9 4 5.5 3-4 5 7.5H3z"/><circle cx="17" cy="6" r="2"/></svg></div>
+      <span class="section-label">Challenge</span>
+    </div>
+    <div class="section-content">
+      <h2>Local businesses were <em>quiet rooms.</em></h2>
+      <p>Coming out of COVID, independent restaurant and bar owners across the Dallas–Fort Worth metroplex had lost a large share of their regular customer base and had no reliable way to bring people back through the door. Most had no in-house marketing function, no events pipeline, and no bandwidth to build either while trying to keep the business running.</p>
+      <p>They didn't need a consultant with a slide deck. They needed someone to own the whole night — the concept, the room, the staffing, the guest list, and the follow-through — from a first walkthrough of an empty venue to a line out the door.</p>
+    </div>
+  </div>
+
+  <div class="case-section reveal">
+    <div class="section-label-wrap">
+      <div class="section-icon icon-approach"><svg viewBox="0 0 24 24" fill="none" stroke="#4A7CC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg></div>
+      <span class="section-label">Approach</span>
+    </div>
+    <div class="section-content">
+      <h2>One partner, <em>every piece of the night.</em></h2>
+      <p>Founded MCN Group as a mission-driven networking company built on a simple trade: local owners get a fully produced, professionally run event designed to put their space in front of new customers, and guests get a genuinely curated experience with real networking value, not just another generic promo.</p>
+      <p class="pull-quote">Scout the venue. Design the theme. Run the room.</p>
+      <p>Every partnership started the same way: scouting and securing a venue, consulting with the owner on their media presence, then building a themed event from the ground up (a Thanksgiving dinner, a seasonal celebration, a brand or menu promotion) around that specific room and audience, all designed to drive foot traffic and sales.</p>
+    </div>
+  </div>
+
+  <div class="case-section reveal">
+    <div class="section-label-wrap">
+      <div class="section-icon icon-action"><svg viewBox="0 0 24 24" fill="none" stroke="#C8A028" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      <span class="section-label">What I Did</span>
+    </div>
+    <div class="section-content">
+      <h2>Four disciplines, <em>one founder.</em></h2>
+
+      <div class="narrative-block">
+        <div class="narrative-label"><span>Creative Vision & Brand</span> · Founder, MCN Group</div>
+        <p>Owned the full creative direction for every event: the theme (a holiday dinner, a seasonal celebration, a brand or menu promotion), the menu concepts developed with each venue partner, and the guest walkthrough, treating the path from entry to the main activation the same way as a CX journey map. Designed the event posters and led all media and social assets end to end.</p>
+      </div>
+
+      <div class="narrative-block">
+        <div class="narrative-label"><span>Venue & Vendor Relations</span></div>
+        <p>Scouted and secured venue partnerships across the Dallas–Fort Worth metroplex, including Mighty Chick Pocha, VIBE Lounge, and Mad for Chicken, and owned the vendor relationships (menu and beverage programs, sound and lighting, promotional talent) behind every event.</p>
+      </div>
+
+      <div class="narrative-block">
+        <div class="narrative-label"><span>Staffing & Community Partnerships</span></div>
+        <p>Built and managed on-site event staffing, including bartenders, local security, and off-duty police, and partnered with local community and promotion groups, including Asian Friends of DFW, to build guest lists and extend each event's reach into new audiences.</p>
+      </div>
+
+      <div class="narrative-block">
+        <div class="narrative-label"><span>Team Leadership & Flagship Build-Out</span></div>
+        <p>Led a core team of 4, plus contracted design and media talent, across 6 events ranging from 60 to 550 guests. For the flagship event, owned the full venue build-out — transforming the physical space, producing print posters, running marketing and the guest list, and hiring promotional recruiters.</p>
+      </div>
+
+      <div class="tags-row">
+        <span class="tag">Event Production</span>
+        <span class="tag">Venue Relations</span>
+        <span class="tag">Vendor Management</span>
+        <span class="tag">Creative Direction</span>
+        <span class="tag">Staffing & Ops</span>
+        <span class="tag">Community Partnerships</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-section reveal">
+    <div class="section-label-wrap">
+      <div class="section-icon icon-results"><svg viewBox="0 0 24 24" fill="none" stroke="#3CA064" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <span class="section-label">Results</span>
+    </div>
+    <div class="section-content">
+      <h2>Six nights, <em>zero blueprint.</em></h2>
+      <p>In under a year and a half, grew MCN Group from a first venue walkthrough into 6 fully produced events across the Dallas–Fort Worth metroplex, with guest counts ranging from an initial 60-guest activation up to a 550-guest flagship, each one designed, staffed, and run by a founder-led team of 4 plus contracted creative talent.</p>
+      <p>Every venue partner got a full night of production they didn't have the time or infrastructure to build themselves: a designed experience, a managed guest list, and a room that felt intentional from the moment guests walked in — the same relationship-first, detail-first approach that carried into every stakeholder relationship since.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="gallery-section reveal">
+  <div class="gallery-label">From the Field</div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <a href="https://www.google.com/maps/search/?api=1&amp;query=VIBE+Lounge%2C+2405+S+Stemmons+Fwy+Ste+200%2C+Lewisville%2C+TX+75067" target="_blank" rel="noopener">
+        <img src="mcn-flyer-winter-solstice.jpg" alt="Winter Solstice event poster, MCN Group at VIBE Lounge" loading="lazy">
+      </a>
+      <div class="gallery-caption">Winter Solstice · MCN Group at VIBE Lounge ↗</div>
+    </div>
+    <div class="gallery-note">
+      <h3>Theme, menu, walkthrough, <em>poster:</em> one hand on all of it.</h3>
+      <p>Every event's print poster, program, and guest flow was designed and produced in-house, then run alongside the venue's own staff, promotional talent, and security on-site.</p>
+    </div>
+  </div>
+</div>
+
+<div class="key-learning reveal">
+  <div class="key-learning-inner">
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:24px;">
+    <div class="section-icon icon-learning"><svg viewBox="0 0 24 24" fill="none" stroke="#8C5AC8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.5.4.8 1 .8 1.6v.1h5.6v-.1c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3z"/></svg></div>
+    <div class="kl-label" style="margin-bottom:0;">Key Learning</div>
+  </div>
+    <p class="kl-text">Hospitality and CX are the same discipline in a different room. Every lever that builds trust in a digital product — a clear path through the experience, a consistent brand voice, staffing that shows up right — builds a great event, too. Owning a room end to end, with a team of four to lean on, is what taught me to design an experience path long before I ever called it a <em>journey map.</em></p>
+  </div>
+</div>
+
+<div class="partners-section reveal">
+  <div class="partners-label">Venue, Vendor & Community Partners</div>
+  <div class="partners-brand-row">
+    <img src="mcn-group-logo-mark.png" alt="MCN Group logo">
+    <span>Produced under the MCN Group brand</span>
+  </div>
+  <div class="partners-grid">
+
+    <a class="partner-card" href="https://mightychickdfw.com/" target="_blank" rel="noopener">
+      <img class="partner-logo-tile" src="partner-mightychickpocha-logo.png" alt="Mighty Chick Pocha logo">
+      <div class="partner-meta">
+        <div class="partner-role">Venue Partner</div>
+        <div class="partner-location">Plano, TX ↗</div>
+      </div>
+    </a>
+
+    <a class="partner-card" href="https://www.icompetex.com/home" target="_blank" rel="noopener">
+      <img class="partner-logo-tile" src="partner-icompete-experience-logo.png" alt="iCompete Experience logo">
+      <div class="partner-meta">
+        <div class="partner-role">Venue Partner</div>
+        <div class="partner-location">VIBE Lounge · Lewisville, TX ↗</div>
+      </div>
+    </a>
+
+    <a class="partner-card" href="https://www.madforchicken.com/" target="_blank" rel="noopener">
+      <img class="partner-logo-tile" src="partner-madforchicken-logo.png" alt="Mad For Chicken logo">
+      <div class="partner-meta">
+        <div class="partner-role">Venue Partner</div>
+        <div class="partner-location">Dallas–Fort Worth ↗</div>
+      </div>
+    </a>
+
+    <a class="partner-card" href="https://www.facebook.com/groups/551815422521775/" target="_blank" rel="noopener">
+      <img class="partner-photo" src="partner-asian-friends-dfw.jpg" alt="Asian Friends of DFW logo">
+      <div class="partner-meta">
+        <div class="partner-role">Community & Promotions Partner</div>
+        <div class="partner-location">Dallas–Fort Worth ↗</div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<div class="case-nav">
+  <a href="case-study-04.html" class="case-nav-link">← Previous project</a>
+  <a href="work.html" class="case-nav-link next">All work →</a>
+</div>
+
+<footer>
+  <span class="footer-copy">© 2026 Rebecca Kim</span>
+
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 60);
+  });
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), 80); observer.unobserve(entry.target); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Nav color swap on scroll past hero
+  const navName = document.querySelector('.nav-name');
+  const navBack = document.querySelector('.nav-back');
+  const hero = document.querySelector('.case-hero');
+  function updateNav() {
+    if (!hero) return;
+    const heroBottom = hero.getBoundingClientRect().bottom;
+    if (heroBottom <= 0) {
+      navName.style.color = 'var(--warm-mid)';
+      navBack.style.color = 'var(--warm-mid)';
+    } else {
+      navName.style.color = 'var(--accent)';
+      navBack.style.color = 'var(--accent)';
+    }
+  }
+  window.addEventListener('scroll', updateNav);
+  updateNav();
+
+  // Collapsible nav
+  (function() {
+    const navEl = document.querySelector('nav');
+    const boat = document.getElementById('navBoat');
+    const panel = document.getElementById('navPanel');
+    if (!navEl || !boat || !panel) return;
+    const THRESHOLD = 80;
+    let manualOpen = false;
+    let openScrollY = 0;
+    const CLOSE_DELTA = 32;
+    function applyNavState() {
+      const scrolled = window.scrollY > THRESHOLD;
+      if (!scrolled) {
+        navEl.classList.remove('nav-hidden');
+        boat.classList.remove('visible');
+        panel.classList.remove('open');
+        manualOpen = false;
+      } else {
+        navEl.classList.add('nav-hidden');
+        if (manualOpen) {
+          boat.classList.remove('visible');
+          panel.classList.add('open');
+        } else {
+          boat.classList.add('visible');
+          panel.classList.remove('open');
+        }
+      }
+    }
+    window.addEventListener('scroll', () => {
+      if (manualOpen) {
+        if (Math.abs(window.scrollY - openScrollY) < CLOSE_DELTA) return;
+        manualOpen = false;
+      }
+      applyNavState();
+    });
+    boat.addEventListener('click', (e) => {
+      e.stopPropagation();
+      manualOpen = true;
+      openScrollY = window.scrollY;
+      applyNavState();
+    });
+    document.addEventListener('click', (e) => {
+      if (manualOpen && !panel.contains(e.target) && !boat.contains(e.target)) {
+        manualOpen = false;
+        applyNavState();
+      }
+    });
+    applyNavState();
+  })();
+</script>
+</body>
+</html>
